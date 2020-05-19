@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        app:cardBackgroundColor="#F3E5F5"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewComment"
+                android:layout_width="wrap_content"
+                android:padding="5dp"
+                android:layout_height="wrap_content"
+                android:text="User Comments"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="202dp"
+        android:text="Author Name, "
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTimeStamp"
+        app:layout_constraintEnd_toStartOf="@+id/textViewTimeStamp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewTimeStamp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewTimeStamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:text="1st April 2020, 12:00PM"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewName"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

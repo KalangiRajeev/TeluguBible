@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "369378746411",
+    "firebase_url": "https://telugu-bible-messages.firebaseio.com",
+    "project_id": "telugu-bible-messages",
+    "storage_bucket": "telugu-bible-messages.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369378746411:android:6b22595f7a95cd6ded8a6e",
+        "android_client_info": {
+          "package_name": "com.ikalangirajeev.telugubiblemessages"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369378746411-gfpv9cu4bin1gbu8s8g80o3nktfcvkjm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ikalangirajeev.telugubiblemessages",
+            "certificate_hash": "7cf6b99d41072675e44374c5b9a4c3b692e7a64f"
+          }
+        },
+        {
+          "client_id": "369378746411-eqt0irmq5mmlbgshcumgptu21khujcvd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhswlStz9A1r18_Xn5lBkA0Pk83nNIciA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369378746411-eqt0irmq5mmlbgshcumgptu21khujcvd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

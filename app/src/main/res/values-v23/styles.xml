@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!--        Status Bar Color-->
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!--  Activity transitions      -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">false</item>
+        <item name="android:windowAllowReturnTransitionOverlap">false</item>
+        <item name="android:windowEnterTransition">@transition/window_explode</item>
+        <item name="android:windowExitTransition">@transition/window_explode</item>
+        <item name="android:windowReenterTransition">@transition/window_explode</item>
+        <item name="android:windowReturnTransition">@transition/window_explode</item>
+
+        <!--  Fragment Shared Element transitions -->
+        <item name="android:fragmentSharedElementEnterTransition">@transition/sharedelement_slide
+        </item>
+        <item name="android:fragmentSharedElementReturnTransition">@transition/sharedelement_slide
+        </item>
+
+    </style>
+</resources>

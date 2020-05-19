@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Telugu Bible, Blogs</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Developed by \nKalangi Rajeev</string>
+    <string name="nav_header_subtitle">i.kalangirajeev@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_logout">Logout</string>
+
+    <string name="menu_bible">Telugu Bible</string>
+    <string name="menu_create_blog">My Prayer Requests</string>
+    <string name="menu_blogs_2020">Posts 2020</string>
+    <string name="menu_user_blogs">User Posts</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_send">Send</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_search_blog"></string>
+
+</resources>

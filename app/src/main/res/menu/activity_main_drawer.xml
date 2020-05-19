@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/bibleFragment"
+            android:icon="@drawable/ic_menu_book"
+            android:title="@string/menu_bible" />
+
+
+    </group>
+
+    <item android:title="Posts">
+        <menu>
+            <item
+                android:id="@+id/profileFragment"
+                android:icon="@drawable/ic_user_name"
+                android:title="@string/menu_profile" />
+
+            <item
+                android:id="@+id/blogsFragment"
+                android:icon="@drawable/ic_menu_message"
+                android:title="@string/menu_blogs_2020" />
+
+            <item
+                android:id="@+id/userBlogsFragment"
+                android:icon="@drawable/ic_blog_description"
+                android:title="@string/menu_user_blogs" />
+
+        </menu>
+    </item>
+
+</menu>
