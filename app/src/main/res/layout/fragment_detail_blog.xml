@@ -50,7 +50,8 @@
                             android:drawableStart="@drawable/ic_user_name"
                             android:labelFor="@id/editTextBlogTitle"
                             android:text="Author Name"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                            android:autoSizeMaxTextSize="14sp"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                         <TextView
                             android:id="@+id/textViewEmail"
@@ -62,7 +63,8 @@
                             android:gravity="end"
                             android:labelFor="@id/editTextBlogTitle"
                             android:text="author@email.com"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                            android:autoSizeMaxTextSize="14sp"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                     </LinearLayout>
 
@@ -74,7 +76,8 @@
                         android:layout_gravity="center_vertical"
                         android:gravity="top|left"
                         android:text="1st April 2020, 12:00PM"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:autoSizeMaxTextSize="14sp"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
 
                     <TextView
                         android:id="@+id/editTextBlogTitle"
@@ -84,6 +87,7 @@
                         android:hint="Title"
                         android:isScrollContainer="true"
                         android:maxLines="2"
+                        android:autoSizeMaxTextSize="16sp"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                         android:textStyle="bold" />
 
@@ -98,6 +102,7 @@
                         android:inputType="textMultiLine"
                         android:isScrollContainer="true"
                         android:maxLines="3"
+                        android:autoSizeMaxTextSize="16sp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 
@@ -121,7 +126,8 @@
                             android:isScrollContainer="true"
                             android:maxLines="2"
                             android:minLines="1"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                            android:autoSizeMaxTextSize="16sp"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                         <ImageButton
                             android:id="@+id/textViewSubmit"

@@ -56,14 +56,15 @@
                     android:drawableStart="@drawable/ic_user_name"
                     android:labelFor="@id/editTextBlogTitle"
                     android:text="Author Name"
+                    android:autoSizeMaxTextSize="14sp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:textColor="#B71C1C" />
 
                 <TextView
                     android:id="@+id/textViewEmail"
                     android:layout_weight="1"
-                    android:padding="5dp
-"
+                    android:padding="5dp"
+                    android:autoSizeMaxTextSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -84,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter Title"
                 app:counterEnabled="true"
+                app:endIconMode="clear_text"
                 app:counterMaxLength="100">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -95,6 +97,7 @@
                     android:lines="2"
                     android:maxLength="250"
                     android:maxLines="3"
+                    android:autoSizeMaxTextSize="16sp"
                     android:textAllCaps="false"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -106,6 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter Description"
+                app:endIconMode="clear_text"
                 app:counterEnabled="true"
                 app:counterMaxLength="1000">
 
@@ -115,10 +119,11 @@
                     android:drawablePadding="10dp"
                     android:gravity="start"
                     android:inputType="textMultiLine"
-                    android:lines="10"
+                    android:lines="9"
                     android:maxLength="250"
                     android:maxLines="10"
                     android:textAllCaps="false"
+                    android:autoSizeMaxTextSize="16sp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,6 +138,7 @@
                 android:fontFamily="monospace"
                 android:text="Submit"
                 android:textAllCaps="false"
+                android:autoSizeMaxTextSize="16sp"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
         </LinearLayout>

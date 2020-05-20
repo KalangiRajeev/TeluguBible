@@ -50,7 +50,7 @@ public class BooksViewModel extends AndroidViewModel {
         blogIndexList.clear();
 
         for (int i = 0; i < bible.getBooks().size(); i++) {
-            Data blogIndex = new Data(books[i], "అధ్యయాలు " + String.valueOf(bible.getBooks().get(i).getChapters().size()));
+            Data blogIndex = new Data(books[i], "అధ్యాయాలు " + String.valueOf(bible.getBooks().get(i).getChapters().size()));
             blogIndexList.add(blogIndex);
         }
 

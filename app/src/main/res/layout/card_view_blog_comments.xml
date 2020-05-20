@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="User Comments"
+            android:autoSizeMaxTextSize="16sp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:textColor="#000000" />
 
@@ -36,6 +37,7 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         android:textColor="#303F9F"
         android:textStyle="bold"
+        android:autoSizeMaxTextSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewTimeStamp"
         app:layout_constraintEnd_toStartOf="@+id/textViewTimeStamp"
         app:layout_constraintTop_toTopOf="@+id/textViewTimeStamp" />
@@ -46,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:text="1st April 2020, 12:00PM"
+        android:autoSizeMaxTextSize="14sp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         android:textColor="#004D40"
         app:layout_constraintEnd_toEndOf="parent"

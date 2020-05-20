@@ -11,14 +11,14 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">false</item>
         <item name="android:windowAllowReturnTransitionOverlap">false</item>
-        <item name="android:windowEnterTransition">@transition/window_explode</item>
-        <item name="android:windowExitTransition">@transition/window_explode</item>
-        <item name="android:windowReenterTransition">@transition/window_explode</item>
-        <item name="android:windowReturnTransition">@transition/window_explode</item>
+        <item name="android:windowEnterTransition">@transition/fade_in_out</item>
+        <item name="android:windowExitTransition">@transition/fade_in_out</item>
+        <item name="android:windowReenterTransition">@transition/fade_in_out</item>
+        <item name="android:windowReturnTransition">@transition/fade_in_out</item>
 
 <!--  Fragment Shared Element transitions -->
-<!--        <item name="android:fragmentSharedElementEnterTransition">@transition/sharedelement_slide</item>-->
-<!--        <item name="android:fragmentSharedElementReturnTransition">@transition/sharedelement_slide</item>-->
+        <item name="android:fragmentSharedElementEnterTransition">@transition/fade_in_out</item>
+        <item name="android:fragmentSharedElementReturnTransition">@transition/fade_in_out</item>
 
     </style>
 

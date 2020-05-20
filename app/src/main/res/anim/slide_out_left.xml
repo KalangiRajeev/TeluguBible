@@ -6,6 +6,6 @@
         android:toXDelta="-100%"
         android:fromYDelta="0%"
         android:toYDelta="0%"
-        android:duration="@android:integer/config_longAnimTime"/>
+        android:duration="@android:integer/config_mediumAnimTime"/>
 
 </set>

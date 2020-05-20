@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:autoSizeMaxTextSize="14sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/colorAccent"
             android:textStyle="bold" />
@@ -31,6 +32,7 @@
             android:text="TextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textIsSelectable="true"
+            android:autoSizeMaxTextSize="18sp"
             android:textSize="18sp" />
 
     </LinearLayout>

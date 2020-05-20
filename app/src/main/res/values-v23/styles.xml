@@ -14,10 +14,10 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">false</item>
         <item name="android:windowAllowReturnTransitionOverlap">false</item>
-        <item name="android:windowEnterTransition">@transition/window_explode</item>
-        <item name="android:windowExitTransition">@transition/window_explode</item>
-        <item name="android:windowReenterTransition">@transition/window_explode</item>
-        <item name="android:windowReturnTransition">@transition/window_explode</item>
+        <item name="android:windowEnterTransition">@transition/slide_from_right</item>
+        <item name="android:windowExitTransition">@transition/slide_from_right</item>
+        <item name="android:windowReenterTransition">@transition/slide_from_right</item>
+        <item name="android:windowReturnTransition">@transition/slide_from_right</item>
 
         <!--  Fragment Shared Element transitions -->
         <item name="android:fragmentSharedElementEnterTransition">@transition/sharedelement_slide
