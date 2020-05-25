@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class Verse {
 
-    @SerializedName("Verse")
+    @SerializedName("verse")
     private String verse;
 
-    @SerializedName("Verseid")
-    private String verseId;
+    @SerializedName("verseid")
+    private Integer verseId;
 
     public Verse() {
     }
 
-    public Verse(String verse, String verseId) {
+    public Verse(String verse, Integer verseId) {
         this.verse = verse;
         this.verseId = verseId;
     }
@@ -22,7 +22,7 @@ public class Verse {
         return verse;
     }
 
-    public String getVerseId() {
+    public Integer getVerseId() {
         return verseId;
     }
 }

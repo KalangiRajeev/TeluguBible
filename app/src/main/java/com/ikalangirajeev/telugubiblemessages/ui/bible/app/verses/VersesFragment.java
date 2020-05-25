@@ -20,9 +20,11 @@ import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ikalangirajeev.telugubiblemessages.R;
+import com.ikalangirajeev.telugubiblemessages.ui.bible.app.linkedrefs.BottomSheetFragment;
 import com.ikalangirajeev.telugubiblemessages.ui.bible.app.Data;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class VersesFragment extends Fragment {
 
@@ -79,14 +81,23 @@ public class VersesFragment extends Fragment {
                                   @NonNull RecyclerView.ViewHolder viewHolder,
                                   @NonNull RecyclerView.ViewHolder target) {
 
-
                 return false;
             }
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 if(ItemTouchHelper.LEFT == direction){
-                    Toast.makeText(getActivity(), "Swiped to LEFT", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Linked References...", Toast.LENGTH_LONG).show();
+                    BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("bookName", bookName);
+                    bundle.putInt("bookNumber", bookNumber);
+                    bundle.putInt("chapterNumber", chapterNumber);
+                    bundle.putInt("verseNumber", viewHolder.getAdapterPosition());
+                    bundle.putString("verseBody", myRecyclerViewAdapter.getDataAt(viewHolder.getAdapterPosition()).getHeader());
+                    bundle.putInt("verseId", myRecyclerViewAdapter.getDataAt(viewHolder.getAdapterPosition()).getRefsLinks());
+                    bottomSheetFragment.setArguments(bundle);
+                    bottomSheetFragment.show(getActivity().getSupportFragmentManager(), "bottomSheetFragment");
 
                 } else if (ItemTouchHelper.RIGHT == direction){
                     Intent sendIntent = new Intent();
@@ -105,23 +116,28 @@ public class VersesFragment extends Fragment {
         }).attachToRecyclerView(recyclerView);
 
 
+        try {
+            versesViewModel.getData().observe(getViewLifecycleOwner(), new Observer<List<Data>>() {
+                @Override
+                public void onChanged(List<Data> dataList) {
+                    myRecyclerViewAdapter = new VersesRecyclerViewAdapter(getActivity(), R.layout.card_view_verses, dataList);
+                    recyclerView.setAdapter(myRecyclerViewAdapter);
+                    recyclerView.scrollToPosition(highlightVerseNumber);
+                    myRecyclerViewAdapter.setHighlightColor(highlightVerseNumber);
 
-        versesViewModel.getData().observe(getViewLifecycleOwner(), new Observer<List<Data>>() {
-            @Override
-            public void onChanged(List<Data> dataList) {
-                myRecyclerViewAdapter = new VersesRecyclerViewAdapter(getActivity(), R.layout.card_view_verses, dataList);
-                recyclerView.setAdapter(myRecyclerViewAdapter);
-                recyclerView.scrollToPosition(highlightVerseNumber);
-                myRecyclerViewAdapter.setHighlightColor(highlightVerseNumber);
+                    myRecyclerViewAdapter.setOnItemClickListener(new VersesRecyclerViewAdapter.OnItemClickListener() {
+                        @Override
+                        public void OnItemClick(Data blogIndex, int position) {
 
-                myRecyclerViewAdapter.setOnItemClickListener(new VersesRecyclerViewAdapter.OnItemClickListener() {
-                    @Override
-                    public void OnItemClick(Data blogIndex, int position) {
-
-                    }
-                });
-            }
-        });
+                        }
+                    });
+                }
+            });
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
         return root;

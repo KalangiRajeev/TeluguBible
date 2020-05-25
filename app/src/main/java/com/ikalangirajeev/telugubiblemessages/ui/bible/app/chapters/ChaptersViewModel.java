@@ -21,7 +21,7 @@ public class ChaptersViewModel extends AndroidViewModel {
     private static final String TAG = "ChaptersViewModel";
 
     private MutableLiveData<List<Data>> mBooks;
-    List<Data> blogIndexList;
+    List<Data> dataList;
     private int bookNumber;
     private String bookName;
 
@@ -29,7 +29,7 @@ public class ChaptersViewModel extends AndroidViewModel {
     public ChaptersViewModel(@NonNull Application application) {
         super(application);
         mBooks = new MutableLiveData<>();
-        blogIndexList = new ArrayList<>();
+        dataList = new ArrayList<>();
     }
 
     public void setBookNumber(int bookNumber) {
@@ -48,13 +48,13 @@ public class ChaptersViewModel extends AndroidViewModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        blogIndexList.clear();
+        dataList.clear();
         for (int i = 0; i < bible.getBooks().get(bookNumber).getChapters().size(); i++) {
-            Data blogIndex = new Data(String.valueOf(i + 1), String.valueOf("వచనములు " + bible.getBooks().get(bookNumber).getChapters().get(i).getVerses().size()));
-            blogIndexList.add(blogIndex);
+            Data data = new Data(String.valueOf(i + 1), String.valueOf("వచనములు " + bible.getBooks().get(bookNumber).getChapters().get(i).getVerses().size()), 10);
+            dataList.add(data);
             // Log.d(TAG, data.getHeader() + " & " + data.getBody());
         }
-        mBooks.setValue(blogIndexList);
+        mBooks.setValue(dataList);
         return mBooks;
     }
 
@@ -71,7 +71,7 @@ public class ChaptersViewModel extends AndroidViewModel {
 
             String json = null;
             try {
-                InputStream inputStream = application.getAssets().open("telugu_bible.json");
+                InputStream inputStream = application.getAssets().open("new_telugu_bible.json");
                 int size = inputStream.available();
 
                 byte[] buffer = new byte[size];

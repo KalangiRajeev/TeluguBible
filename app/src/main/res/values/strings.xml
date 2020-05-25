@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Telugu Bible, Blogs</string>
+    <string name="app_name">పరిశుద్ధ గ్రంధము</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Developed by \nKalangi Rajeev</string>
@@ -17,5 +17,8 @@
     <string name="menu_send">Send</string>
     <string name="menu_search">Search</string>
     <string name="menu_search_blog"></string>
+    <string name="email_verified">Verified</string>
+    <string name="email_not_verified">Not Verified (Click here for e-mail Verification)</string>
+    <string name="phone_number_verified">Phone Number Successfully Verified</string>
 
 </resources>

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/bibleFragment"
         android:name="com.ikalangirajeev.telugubiblemessages.ui.bible.app.books.BooksFragment"
-        android:label="fragment_bible"
+        android:label="పరిశుద్ధ గ్రంధము"
         tools:layout="@layout/fragment_books">
 
         <argument
@@ -37,14 +37,27 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@+id/bibleFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_bibleFragment_to_createBlogFragment"
+            app:destination="@id/createBlogFragment" />
+        <action
+            android:id="@+id/action_bibleFragment_to_userBlogsFragment"
+            app:destination="@id/userBlogsFragment" />
+        <action
+            android:id="@+id/action_bibleFragment_to_blogsFragment"
+            app:destination="@id/blogsFragment" />
+        <action
+            android:id="@+id/action_bibleFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
 
     </fragment>
 
     <fragment
         android:id="@+id/chaptersFragment"
         android:name="com.ikalangirajeev.telugubiblemessages.ui.bible.app.chapters.ChaptersFragment"
-        android:label="fragment_chapters"
+        android:label="{BookName}"
         tools:layout="@layout/fragment_chapters">
+
         <action
             android:id="@+id/action_chaptersFragment_to_versesFragment"
             app:destination="@id/versesFragment"
@@ -76,7 +89,7 @@
     <fragment
         android:id="@+id/versesFragment"
         android:name="com.ikalangirajeev.telugubiblemessages.ui.bible.app.verses.VersesFragment"
-        android:label="fragment_verses"
+        android:label="{BookName}"
         tools:layout="@layout/fragment_verses">
 
         <argument
@@ -105,18 +118,6 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
 
-        <action
-            android:id="@+id/action_searchFragment_to_versesFragment"
-            app:destination="@id/versesFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:launchSingleTop="false"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@+id/searchFragment"
-            app:popUpToInclusive="false">
-
-        </action>
         <argument
             android:name="BookName"
             android:defaultValue="Search Results..."
@@ -133,6 +134,9 @@
             android:name="HighlightVerseNumber"
             android:defaultValue="0"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_searchFragment_to_versesFragment"
+            app:destination="@id/versesFragment"/>
     </fragment>
 
     <fragment
@@ -165,6 +169,7 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@+id/loginFragment"
             app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_loginFragment_to_profileFragment"
             app:destination="@id/profileFragment"

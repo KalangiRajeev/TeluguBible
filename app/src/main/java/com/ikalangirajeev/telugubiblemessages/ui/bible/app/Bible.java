@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Bible {
 
-    @SerializedName("Book")
+    @SerializedName("book")
     private List<Book> books;
 
     public Bible() {

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Chapter {
 
-    @SerializedName("Verse")
+    @SerializedName("verse")
     private List<Verse> verses;
 
     public Chapter() {

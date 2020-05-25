@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -39,6 +40,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -76,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
         // Initializing a banner Ad
@@ -87,10 +88,11 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("పరిశుద్ధ గ్రంధము");
-
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+
+
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         mAppBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
@@ -196,25 +198,9 @@ public class MainActivity extends AppCompatActivity {
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 switch (destination.getId()) {
                     case R.id.loginFragment:
-                        fab.setVisibility(View.GONE);
-                        toolbar.setVisibility(View.GONE);
-                        navigationView.setVisibility(View.GONE);
-                        break;
                     case R.id.registrationFragment:
-                        fab.setVisibility(View.GONE);
-                        toolbar.setVisibility(View.GONE);
-                        navigationView.setVisibility(View.GONE);
-                        break;
                     case R.id.resetPasswordFragment:
-                        fab.setVisibility(View.GONE);
-                        toolbar.setVisibility(View.GONE);
-                        navigationView.setVisibility(View.GONE);
-                        break;
                     case R.id.profileFragment:
-                        fab.setVisibility(View.GONE);
-                        toolbar.setVisibility(View.GONE);
-                        navigationView.setVisibility(View.GONE);
-                        break;
                     case R.id.verifyEmailFragment:
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.GONE);
@@ -224,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
                         navigationView.setVisibility(View.VISIBLE);
-                        toolbar.setTitle("పరిశుద్ధ గ్రంధము");
+//                        toolbar.setTitle("పరిశుద్ధ గ్రంధము");
                         toolbar.setSubtitle("66 పుస్తకములు");
                         if (firebaseUser != null && firebaseUser.getDisplayName() != null) {
                             textViewNavHeaderUserLoggedIn.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
@@ -235,14 +221,14 @@ public class MainActivity extends AppCompatActivity {
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
                         navigationView.setVisibility(View.VISIBLE);
-                        toolbar.setTitle(Objects.requireNonNull(arguments).getString("BookName"));
+//                        toolbar.setTitle(Objects.requireNonNull(arguments).getString("BookName"));
                         toolbar.setSubtitle(arguments.getString("ChaptersCount"));
                         break;
                     case R.id.versesFragment:
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
                         navigationView.setVisibility(View.VISIBLE);
-                        toolbar.setTitle(Objects.requireNonNull(arguments).getString("BookName"));
+//                        toolbar.setTitle(Objects.requireNonNull(arguments).getString("BookName"));
                         int chapterNumber = arguments.getInt("ChapterNumber") + 1;
                         toolbar.setSubtitle(chapterNumber + "వ అధ్యాయము");
                         break;

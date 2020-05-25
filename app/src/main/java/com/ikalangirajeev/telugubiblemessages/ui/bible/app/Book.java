@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Book{
 
-    @SerializedName("Chapter")
+    @SerializedName("chapter")
     private List<Chapter> chapters;
 
     public Book(){

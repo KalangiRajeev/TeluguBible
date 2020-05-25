@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -29,7 +30,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private NavController navController;
     private SearchRecyclerViewAdapter searchRecyclerViewAdapter;
-
+    private TextView textViewSearchCount;
 
     String search;
 
@@ -45,18 +46,20 @@ public class SearchFragment extends Fragment {
                 ViewModelProviders.of(this).get(SearchViewModel.class);
         View root = inflater.inflate(R.layout.fragment_search, container, false);
 
+        textViewSearchCount = root.findViewById(R.id.textViewSearchCount);
         recyclerView = root.findViewById(R.id.recyclerView);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-
         searchViewModel.setSearchableString(search);
+
         searchViewModel.getSearchDataList().observe(getViewLifecycleOwner(), new Observer<List<SearchData>>() {
             @Override
             public void onChanged(List<SearchData> searchData) {
                 searchRecyclerViewAdapter = new SearchRecyclerViewAdapter(getActivity(), R.layout.card_view_verses, searchData);
                 recyclerView.setAdapter(searchRecyclerViewAdapter);
-                Toast.makeText(getActivity(), "Search Results : " + searchData.size(), Toast.LENGTH_LONG).show();
+                textViewSearchCount.setText(searchData.size() + " Results");
 
                 searchRecyclerViewAdapter.setOnItemClickListener(new SearchRecyclerViewAdapter.OnItemClickListener() {
                     @Override
@@ -71,15 +74,12 @@ public class SearchFragment extends Fragment {
                 });
             }
         });
-
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         navController = Navigation.findNavController(view);
-
     }
 }

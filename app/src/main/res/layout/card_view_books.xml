@@ -25,9 +25,9 @@
             android:autoSizeTextType="uniform"
             android:text="TextView"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textSize="16sp"
-            android:autoSizeMaxTextSize="16sp"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:autoSizeMaxTextSize="14sp"
             app:autoSizeTextType="uniform" />
 
         <TextView
@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textAlignment="center"
-            android:autoSizeMaxTextSize="14sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:autoSizeMaxTextSize="12sp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             android:textColor="@color/colorAccent"
             android:textStyle="bold" />
     </LinearLayout>

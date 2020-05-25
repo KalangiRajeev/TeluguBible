@@ -1,22 +1,14 @@
 package com.ikalangirajeev.telugubiblemessages.ui.userauth.app.userprofile;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.FirebaseException;
@@ -39,12 +29,10 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.hbb20.CountryCodePicker;
 import com.ikalangirajeev.telugubiblemessages.R;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static androidx.lifecycle.ViewModelProviders.*;
+import static androidx.lifecycle.ViewModelProviders.of;
 
 public class ProfileFragment extends Fragment {
 
@@ -94,26 +82,24 @@ public class ProfileFragment extends Fragment {
         editTextVerificationNumber = root.findViewById(R.id.editTextVerificationNumber);
         buttonVerifyPhone = root.findViewById(R.id.buttonVerifyPhone);
 
-        if (FirebaseAuth.getInstance().getCurrentUser()!= null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             textViewEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
             if (FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
-                textViewEmailVerified.setText("Verified");
+                textViewEmailVerified.setText(R.string.email_verified);
                 isEmailNotVerified = false;
 
             } else {
                 textViewEmailVerified.setTextColor(Color.RED);
-                textViewEmailVerified.setText(("Not Verified (Click here for e-mail Verification)"));
+                textViewEmailVerified.setText((getString(R.string.email_not_verified)));
             }
 
             if (FirebaseAuth.getInstance().getCurrentUser().getDisplayName() != null) {
                 editTextProfileName.getEditText().setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
             }
 
-            if (FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber()!=null) {
-                editTextPhoneNumber.getEditText().setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
-                buttonVerifyPhone.setVisibility(View.GONE);
-                editTextVerificationNumber.setVisibility(View.GONE);
+            if (FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() != null) {
+                editTextPhoneNumber.getEditText().setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().substring(3));
             }
         }
 
@@ -129,7 +115,7 @@ public class ProfileFragment extends Fragment {
         textViewEmailVerified.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isEmailNotVerified) {
+                if (isEmailNotVerified) {
                     Bundle bundle = new Bundle();
                     bundle.putString("email", textViewEmail.getText().toString().trim());
                     navController.navigate(R.id.verifyEmailFragment, bundle, new NavOptions.Builder()
@@ -167,31 +153,29 @@ public class ProfileFragment extends Fragment {
                     });
 
 
-                    if(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().isEmpty()) {
-                        String phoneNumber = "+"
-                                + countryCodePicker.getSelectedCountryCode()
-                                + editTextPhoneNumber.getEditText().getText().toString().trim();
+                    String phoneNumber = "+"
+                            + countryCodePicker.getSelectedCountryCode()
+                            + editTextPhoneNumber.getEditText().getText().toString().trim();
 
-                        PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber, 60, TimeUnit.SECONDS, getActivity(),
-                                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                                    @Override
-                                    public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                                        super.onCodeSent(verificationId, forceResendingToken);
-                                        ProfileFragment.this.verificationId = verificationId;
-                                    }
-
-                                    @Override
-                                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                                        addPhoneNumber(phoneAuthCredential);
-                                    }
-
-                                    @Override
-                                    public void onVerificationFailed(@NonNull FirebaseException e) {
-                                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber, 60, TimeUnit.SECONDS, getActivity(),
+                            new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                                @Override
+                                public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                                    super.onCodeSent(verificationId, forceResendingToken);
+                                    ProfileFragment.this.verificationId = verificationId;
                                 }
-                        );
-                    }
+
+                                @Override
+                                public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                                    addPhoneNumber(phoneAuthCredential);
+                                }
+
+                                @Override
+                                public void onVerificationFailed(@NonNull FirebaseException e) {
+                                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                    );
                 }
             }
         });
@@ -199,7 +183,7 @@ public class ProfileFragment extends Fragment {
         buttonVerifyPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String verificationCode = editTextVerificationNumber.getEditText().getText().toString().trim();
+                String verificationCode = Objects.requireNonNull(editTextVerificationNumber.getEditText()).getText().toString().trim();
                 if (TextUtils.isEmpty(verificationCode)) {
                     editTextPhoneNumber.setError("Valid Verification Number required");
                     editTextPhoneNumber.requestFocus();
@@ -218,7 +202,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 if (Objects.equals(s, "true")) {
-                    Toast.makeText(getActivity(), "Phone Number Successfully Verified", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.phone_number_verified, Toast.LENGTH_LONG).show();
                     navController.navigate(R.id.action_profileFragment_to_bibleFragment);
                 } else {
                     Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();

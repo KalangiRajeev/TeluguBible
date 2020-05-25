@@ -22,9 +22,8 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textAlignment="center"
-            android:autoSizeMaxTextSize="24sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
         <TextView
             android:id="@+id/textViewChapters"
@@ -32,10 +31,10 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textAlignment="center"
-            android:autoSizeMaxTextSize="14sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             android:textColor="@color/colorAccent"
             android:textStyle="bold" />
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -2,6 +2,7 @@ package com.ikalangirajeev.telugubiblemessages.ui.bible.app.verses;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -9,26 +10,33 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import com.ikalangirajeev.telugubiblemessages.ui.bible.app.Bible;
 import com.ikalangirajeev.telugubiblemessages.ui.bible.app.Data;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class VersesViewModel extends AndroidViewModel {
 
     private static final String TAG = "VersesViewModel";
 
     private MutableLiveData<List<Data>> mText;
-    List<Data> blogIndexList;
+    List<Data> dataList;
     private int bookNumber;
     private int chapterNumber;
+    Integer refLinks = 0;
 
     public VersesViewModel(@NonNull Application application) {
         super(application);
         mText = new MutableLiveData<>();
-        blogIndexList = new ArrayList<>();
+        dataList = new ArrayList<>();
     }
 
     public void setBookNumber(int bookNumber) {
@@ -39,54 +47,62 @@ public class VersesViewModel extends AndroidViewModel {
         this.chapterNumber = chapterNumber;
     }
 
-    public LiveData<List<Data>> getData() {
+    public LiveData<List<Data>> getData() throws ExecutionException, InterruptedException {
 
-        Bible bible = null;
+        dataList.clear();
         try {
-            bible = new MyAsyncTask(getApplication()).execute().get();
+            dataList = new BibleAsyncTask(getApplication()).execute(new Integer[]{bookNumber, chapterNumber}).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        blogIndexList.clear();
-        for (int i = 0; i < bible.getBooks().get(bookNumber).getChapters().get(chapterNumber).getVerses().size(); i++) {
-            Data blogIndex = new Data(bible.getBooks().get(bookNumber).getChapters().get(chapterNumber).getVerses().get(i).getVerse(),
-                    String.valueOf(i + 1) + "వ వచనము");
-            blogIndexList.add(blogIndex);
-        }
-
-        mText.setValue(blogIndexList);
+        mText.setValue(dataList);
         return mText;
     }
 
-    private static class MyAsyncTask extends AsyncTask<Void, Void, Bible> {
+    private static class BibleAsyncTask extends AsyncTask<Integer, Void, List<Data>> {
 
         Application application;
+        Bible bible = null;
 
-        public MyAsyncTask(Application application) {
+        public BibleAsyncTask(Application application) {
             this.application = application;
         }
 
         @Override
-        protected Bible doInBackground(Void... voids) {
-
-            String json = null;
+        protected List<Data> doInBackground(Integer... integers) {
+            List<Data> dataList = new ArrayList<>();
+            String jsonBibleString = null;
+            String jsonRefLinksString = null;
             try {
-                InputStream inputStream = application.getAssets().open("telugu_bible.json");
+                InputStream inputStream = application.getAssets().open("new_telugu_bible.json");
                 int size = inputStream.available();
 
                 byte[] buffer = new byte[size];
                 inputStream.read(buffer);
                 inputStream.close();
 
-                json = new String(buffer, "UTF-8");
+                jsonBibleString = new String(buffer, "UTF-8");
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
             Gson gson = new Gson();
-            Bible bible = gson.fromJson(json, Bible.class);
-            return bible;
+            Bible bible = gson.fromJson(jsonBibleString, Bible.class);
+
+
+            for (int i = 0; i < bible.getBooks().get(integers[0]).getChapters().get(integers[1]).getVerses().size(); i++) {
+
+                Integer verseId = bible.getBooks().get(integers[0]).getChapters().get(integers[1]).getVerses().get(i).getVerseId();
+                String header = bible.getBooks().get(integers[0]).getChapters().get(integers[1]).getVerses().get(i).getVerse();
+                String body = (i + 1) + "వ వచనము";
+
+                Data data = new Data(header, body, verseId);
+
+                dataList.add(data);
+            }
+            return dataList;
         }
+
     }
 }

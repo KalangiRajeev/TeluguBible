@@ -3,6 +3,7 @@ package com.ikalangirajeev.telugubiblemessages.ui.bible.app.verses;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,9 +50,9 @@ public class VersesRecyclerViewAdapter extends RecyclerView.Adapter<VersesRecycl
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Data blogIndex = dataList.get(position);
-        holder.setData(blogIndex);
-        holder.setListeners();
+        Data data = dataList.get(position);
+        holder.setData(data);
+//        holder.setListeners();
 
     }
 
@@ -82,39 +83,43 @@ public class VersesRecyclerViewAdapter extends RecyclerView.Adapter<VersesRecycl
 
         TextView headerTextView;
         TextView bodyTextView;
+        TextView linkedRefs;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             headerTextView = itemView.findViewById(R.id.textViewBooks);
             bodyTextView = itemView.findViewById(R.id.textViewChapters);
+            linkedRefs = itemView.findViewById(R.id.linkedRefs);
         }
 
-        public void setData(Data blogIndex) {
-            this.headerTextView.setText(blogIndex.getHeader());
-            this.bodyTextView.setText(blogIndex.getBody());
+        public void setData(Data data) {
+            this.headerTextView.setText(data.getHeader());
+            this.bodyTextView.setText(data.getBody());
+            this.linkedRefs.setText(String.valueOf(data.getRefsLinks()));
         }
 
-        public void setListeners() {
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-                    int position = getAdapterPosition();
-
-                    MyViewHolder.this.headerTextView.setBackgroundColor(Color.CYAN);
-
-                    if (onItemClickListener != null && position != RecyclerView.NO_POSITION) {
-                        onItemClickListener.OnItemClick(dataList.get(position), position);
-
-                        Log.d(TAG, String.valueOf(dataList.get(position).getHeader()));
-
-                    }
-                    return false;
-                }
-            });
-        }
+//        public void setListeners() {
+//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//
+//                    int position = getAdapterPosition();
+//
+//                    MyViewHolder.this.headerTextView.setBackgroundColor(Color.CYAN);
+//
+//                    if (onItemClickListener != null && position != RecyclerView.NO_POSITION) {
+//                        onItemClickListener.OnItemClick(dataList.get(position), position);
+//
+//                        Log.d(TAG, String.valueOf(dataList.get(position).getHeader()));
+//
+//                    }
+//                    return false;
+//                }
+//            });
+//        }
     }
+
 
     public interface OnItemClickListener {
         void OnItemClick(Data data, int position);

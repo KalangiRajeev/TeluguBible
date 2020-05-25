@@ -86,7 +86,7 @@ public class SearchViewModel extends AndroidViewModel {
 
             String json = null;
             try {
-                InputStream inputStream = application.getAssets().open("telugu_bible.json");
+                InputStream inputStream = application.getAssets().open("new_telugu_bible.json");
                 int size = inputStream.available();
 
                 byte[] buffer = new byte[size];
