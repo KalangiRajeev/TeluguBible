@@ -108,7 +108,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                navController.navigate(R.id.action_profileFragment_to_bibleFragment, bundle);
+                navController.navigate(R.id.bibleFragment, bundle, new NavOptions.Builder()
+                        .setPopUpTo(R.id.profileFragment, true)
+                        .setEnterAnim(R.anim.slide_in_right)
+                        .setExitAnim(R.anim.slide_out_left)
+                        .setPopEnterAnim(R.anim.slide_in_left)
+                        .setPopExitAnim(R.anim.slide_out_right)
+                        .build());
             }
         });
 
@@ -119,6 +125,7 @@ public class ProfileFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putString("email", textViewEmail.getText().toString().trim());
                     navController.navigate(R.id.verifyEmailFragment, bundle, new NavOptions.Builder()
+                            .setPopUpTo(R.id.profileFragment, true)
                             .setExitAnim(R.anim.slide_in_left)
                             .setExitAnim(R.anim.slide_out_right)
                             .setPopEnterAnim(R.anim.slide_in_right)
@@ -203,7 +210,13 @@ public class ProfileFragment extends Fragment {
             public void onChanged(@Nullable String s) {
                 if (Objects.equals(s, "true")) {
                     Toast.makeText(getActivity(), R.string.phone_number_verified, Toast.LENGTH_LONG).show();
-                    navController.navigate(R.id.action_profileFragment_to_bibleFragment);
+                    navController.navigate(R.id.bibleFragment, null, new NavOptions.Builder()
+                            .setPopUpTo(R.id.profileFragment, true)
+                            .setExitAnim(R.anim.slide_in_left)
+                            .setExitAnim(R.anim.slide_out_right)
+                            .setPopEnterAnim(R.anim.slide_in_right)
+                            .setPopExitAnim(R.anim.slide_out_left)
+                            .build());
                 } else {
                     Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
                 }

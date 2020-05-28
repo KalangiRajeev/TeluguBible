@@ -70,14 +70,11 @@ public class ChaptersFragment extends Fragment {
                     @Override
                     public void OnItemClick(Data blogIndex, int position) {
 
-//                        FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
-//                                .addSharedElement(recyclerView.getChildAt(position), "chapters_verses")
-//                                .build();
-
                         Bundle bundle = new Bundle();
                         bundle.putString("BookName", bookName);
                         bundle.putInt("BookNumber", bookNumber);
                         bundle.putInt("ChapterNumber",position);
+                        bundle.putInt("ChapterCount", myRecyclerViewAdapter.getItemCount());
 
                         navController.navigate(R.id.action_chaptersFragment_to_versesFragment, bundle, null, null);
                     }

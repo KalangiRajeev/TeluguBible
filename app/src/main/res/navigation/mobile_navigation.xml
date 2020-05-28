@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/bibleFragment">
+    app:startDestination="@id/splashScreenFragment">
 
     <fragment
         android:id="@+id/bibleFragment"
@@ -32,23 +32,55 @@
             app:destination="@id/chaptersFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:launchSingleTop="false"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@+id/bibleFragment"
-            app:popUpToInclusive="false" />
+            app:popUpTo="@id/chaptersFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_bibleFragment_to_createBlogFragment"
-            app:destination="@id/createBlogFragment" />
+            app:destination="@id/createBlogFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/createBlogFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_bibleFragment_to_userBlogsFragment"
-            app:destination="@id/userBlogsFragment" />
+            app:destination="@id/userBlogsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/userBlogsFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_bibleFragment_to_blogsFragment"
-            app:destination="@id/blogsFragment" />
+            app:destination="@id/blogsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/blogsFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_bibleFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/searchFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_bibleFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 
@@ -63,11 +95,10 @@
             app:destination="@id/versesFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:launchSingleTop="false"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@+id/chaptersFragment"
-            app:popUpToInclusive="false" />
+            app:popUpTo="@id/versesFragment"
+            app:popUpToInclusive="true" />
 
 
         <argument
@@ -136,7 +167,13 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_searchFragment_to_versesFragment"
-            app:destination="@id/versesFragment"/>
+            app:destination="@id/versesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/versesFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -149,10 +186,9 @@
             app:destination="@id/registrationFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:launchSingleTop="true"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@+id/loginFragment"
+            app:popUpTo="@id/registrationFragment"
             app:popUpToInclusive="true" />
 
         <argument
@@ -167,16 +203,16 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@+id/loginFragment"
+            app:popUpTo="@id/resetPasswordFragment"
             app:popUpToInclusive="true" />
-
         <action
-            android:id="@+id/action_loginFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
+            android:id="@+id/action_loginFragment_to_bibleFragment"
+            app:destination="@id/bibleFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
 
     </fragment>
@@ -221,7 +257,9 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/verifyEmailFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -229,19 +267,14 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
         <action
-            android:id="@+id/action_profileFragment_to_bibleFragment"
-            app:destination="@id/bibleFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
             android:id="@+id/action_profileFragment_to_verifyEmailFragment"
             app:destination="@id/verifyEmailFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/verifyEmailFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -261,7 +294,9 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/detailBlogFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -275,7 +310,9 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/blogsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -333,6 +370,20 @@
             android:defaultValue="None"
             app:argType="string" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.ikalangirajeev.telugubiblemessages.SplashScreenFragment"
+        android:label="SplashScreenFragment" >
+        <action
+            android:id="@+id/action_splashScreenFragment_to_bibleFragment"
+            app:destination="@id/bibleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

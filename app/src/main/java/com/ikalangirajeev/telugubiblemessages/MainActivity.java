@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,8 +29,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
+import androidx.navigation.NavGraph;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -74,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,12 +94,10 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
 
 
-
-
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController.getGraph().setStartDestination(R.id.bibleFragment);
         mAppBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
                 .setDrawerLayout(drawerLayout).build();
-
         NavigationUI.setupWithNavController(toolbar, navController, mAppBarConfiguration);
 
         View viewNavigationHeader = navigationView.getHeaderView(0);
@@ -148,12 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.bibleFragment:
-                        navController.navigate(R.id.bibleFragment, null, new NavOptions.Builder()
-                                .setEnterAnim(R.anim.slide_in_right)
-                                .setExitAnim(R.anim.slide_out_left)
-                                .setPopEnterAnim(R.anim.slide_in_left)
-                                .setPopExitAnim(R.anim.slide_out_right)
-                                .build());
+                        navController.navigate(R.id.bibleFragment);
                         return true;
                     case R.id.blogsFragment:
                         navController.navigate(R.id.blogsFragment, null, new NavOptions.Builder()
@@ -197,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 switch (destination.getId()) {
+                    case R.id.splashScreenFragment:
                     case R.id.loginFragment:
                     case R.id.registrationFragment:
                     case R.id.resetPasswordFragment:
@@ -210,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
                         navigationView.setVisibility(View.VISIBLE);
-//                        toolbar.setTitle("పరిశుద్ధ గ్రంధము");
                         toolbar.setSubtitle("66 పుస్తకములు");
                         if (firebaseUser != null && firebaseUser.getDisplayName() != null) {
                             textViewNavHeaderUserLoggedIn.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
@@ -242,7 +237,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.blogsFragment:
                         fab.setVisibility(View.VISIBLE);
                         toolbar.setVisibility(View.VISIBLE);
-                        navigationView.setVisibility(View.VISIBLE);
                         toolbar.setTitle("Posts 2020");
                         toolbar.setSubtitle("Press '+' to create...");
                         break;
@@ -324,34 +318,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (firebaseUser == null) {
-            navController.navigate(R.id.loginFragment);
-        } else if (!firebaseUser.isEmailVerified()) {
-
-            firebaseUser.getDisplayName();
-            firebaseUser.getEmail();
-            firebaseUser.isEmailVerified();
-            firebaseUser.getPhoneNumber();
-
-
-            Bundle bundle = new Bundle();
-            bundle.putString("email", firebaseUser.getEmail());
-            Toast.makeText(MainActivity.this, firebaseUser.getEmail(), Toast.LENGTH_LONG).show();
-            navController.navigate(R.id.verifyEmailFragment, bundle);
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
 
         final MenuItem menuItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) menuItem.getActionView();
+        menu.findItem(R.id.action_next).setVisible(false);
+        menu.findItem(R.id.action_previous).setVisible(false);
 
+        final SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -406,18 +382,18 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+
             case R.id.action_search:
                 NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-                return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+                     return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
 
             case R.id.action_logout:
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                     Toast.makeText(MainActivity.this, Objects.requireNonNull(firebaseUser).getEmail()
                             + " is logged out", Toast.LENGTH_LONG).show();
                     FirebaseAuth.getInstance().signOut();
-                    NavController navCtrl = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
-                    Bundle bundle = new Bundle();
-                    navCtrl.navigate(R.id.loginFragment, bundle, new NavOptions.Builder()
+                    NavController navCtrl = Navigation.findNavController(this, R.id.nav_host_fragment);
+                    navCtrl.navigate(R.id.loginFragment, null, new NavOptions.Builder()
                             .setLaunchSingleTop(true)
                             .setEnterAnim(R.anim.slide_in_left).setExitAnim(R.anim.slide_out_right)
                             .setPopEnterAnim(R.anim.slide_in_right).setPopExitAnim(R.anim.slide_out_left)
@@ -426,43 +402,16 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "There is no current logged in user", Toast.LENGTH_LONG).show();
                 }
                 return true;
-        }
 
-
-        if (item.getItemId() == R.id.action_search) {
-            Toast.makeText(this, "Search Telugu Bible Content", Toast.LENGTH_LONG).show();
-            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-            return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
-        } else if (item.getItemId() == R.id.action_logout) {
-            new AlertDialog.Builder(this).setTitle("Logout User").setMessage("Are you sure to Logout")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            FirebaseAuth.getInstance().signOut();
-                            Toast.makeText(MainActivity.this, "You are logged out", Toast.LENGTH_LONG).show();
-                            Bundle bundle = new Bundle();
-                            navController.navigate(R.id.loginFragment, bundle, new NavOptions.Builder()
-                                    .setLaunchSingleTop(true)
-                                    .setEnterAnim(R.anim.slide_in_left).setExitAnim(R.anim.slide_out_right)
-                                    .setPopEnterAnim(R.anim.slide_in_right).setPopExitAnim(R.anim.slide_out_left)
-                                    .build());
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(MainActivity.this, "User is not logged out", Toast.LENGTH_LONG).show();
-                        }
-                    }).create();
+            default:
+                return true;
         }
-        return true;
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
 

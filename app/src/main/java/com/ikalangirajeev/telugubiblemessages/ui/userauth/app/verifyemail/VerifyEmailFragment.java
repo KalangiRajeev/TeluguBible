@@ -72,7 +72,7 @@ public class VerifyEmailFragment extends Fragment {
                 bundle.putString("email", textViewVerifyEmail.getText().toString().trim());
 
                 NavOptions navOptions = new NavOptions.Builder()
-                        .setLaunchSingleTop(true)
+                        .setPopUpTo(R.id.verifyEmailFragment, true)
                         .setEnterAnim(R.anim.slide_in_left).setExitAnim(R.anim.slide_out_right)
                         .setPopEnterAnim(R.anim.slide_in_right).setPopExitAnim(R.anim.slide_out_left)
                         .build();

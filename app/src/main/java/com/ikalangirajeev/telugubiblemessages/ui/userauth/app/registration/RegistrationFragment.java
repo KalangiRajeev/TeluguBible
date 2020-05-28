@@ -42,7 +42,6 @@ public class RegistrationFragment extends Fragment {
     private TextInputLayout editTextConfirmPassword;
     private Button buttonRegister;
     private TextView textViewSignin;
-    private ProgressBar progressBar;
 
 
     private String email;
@@ -70,7 +69,6 @@ public class RegistrationFragment extends Fragment {
         editTextConfirmPassword = root.findViewById(R.id.edit_text_register_confirm_password);
         buttonRegister = root.findViewById(R.id.button_register);
         textViewSignin = root.findViewById(R.id.text_view_login);
-        progressBar = root.findViewById(R.id.progressbar_register);
 
         textViewSignin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +77,7 @@ public class RegistrationFragment extends Fragment {
                 bundle.putString("email", editTextEmail.getEditText().getText().toString().trim());
 
                 NavOptions navOptions = new NavOptions.Builder()
-                        .setLaunchSingleTop(true)
+                        .setPopUpTo(R.id.registrationFragment, true)
                         .setEnterAnim(R.anim.slide_in_left).setExitAnim(R.anim.slide_out_right)
                         .setPopEnterAnim(R.anim.slide_in_right).setPopExitAnim(R.anim.slide_out_left)
                         .build();
@@ -129,7 +127,6 @@ public class RegistrationFragment extends Fragment {
                             if (s.equals("true")) {
                                 Toast.makeText(getActivity(), "User Registration Successful. Verify email", Toast.LENGTH_LONG).show();
 
-
                                 FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
                                         .addSharedElement(headerTextView, "header_of_page")
                                         .addSharedElement(buttonRegister, "button_se")
@@ -137,7 +134,7 @@ public class RegistrationFragment extends Fragment {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("email", editTextEmail.getEditText().getText().toString().trim());
                                 NavOptions navOptions = new NavOptions.Builder()
-                                        .setLaunchSingleTop(true)
+                                        .setPopUpTo(R.id.registrationFragment, true)
                                         .setEnterAnim(R.anim.slide_in_left).setExitAnim(R.anim.slide_out_right)
                                         .setPopEnterAnim(R.anim.slide_in_right).setPopExitAnim(R.anim.slide_out_left)
                                         .build();

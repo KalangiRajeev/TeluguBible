@@ -20,17 +20,17 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     private static final String TAG = "MyRecyclerViewAdapter";
     private Context context;
-    private List<Data> blogIndexList = new ArrayList<>();
+    private List<Data> dataList = new ArrayList<>();
     private LayoutInflater layoutInflater;
     private OnItemClickListener onItemClickListener;
     private int layoutResource;
     private int highLightPosition;
 
-    public MyRecyclerViewAdapter(Context context, int layoutResource, List<Data> blogIndexList) {
+    public MyRecyclerViewAdapter(Context context, int layoutResource, List<Data> dataList) {
         this.context = context;
         this.layoutResource = layoutResource;
         layoutInflater = LayoutInflater.from(context);
-        this.blogIndexList = blogIndexList;
+        this.dataList = dataList;
         setHasStableIds(true);
     }
 
@@ -48,14 +48,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Data blogIndex = blogIndexList.get(position);
-        holder.setData(blogIndex);
+        Data data = dataList.get(position);
+        holder.setData(data);
         holder.setListeners();
 
     }
 
     public Data getDataAt(int position){
-        return blogIndexList.get(position);
+        return dataList.get(position);
     }
 
     public void setHighlightColor(int position){
@@ -64,7 +64,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public int getItemCount() {
-        return blogIndexList.size();
+        return dataList.size();
     }
 
     @Override
@@ -100,9 +100,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (onItemClickListener != null && position != RecyclerView.NO_POSITION) {
-                        onItemClickListener.OnItemClick(blogIndexList.get(position), position);
+                        onItemClickListener.OnItemClick(dataList.get(position), position);
 
-                        Log.d(TAG, String.valueOf(blogIndexList.get(position).getHeader()));
+                        Log.d(TAG, String.valueOf(dataList.get(position).getHeader()));
                     }
                 }
             });

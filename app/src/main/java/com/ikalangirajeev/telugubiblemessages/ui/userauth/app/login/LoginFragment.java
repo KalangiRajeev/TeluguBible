@@ -110,14 +110,7 @@ public class LoginFragment extends Fragment {
                 FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
                         .addSharedElement(textViewSkipLogin, textViewSkipLogin.getTransitionName())
                         .build();
-
-                NavOptions navOptions = new NavOptions.Builder()
-                        .setEnterAnim(R.anim.slide_in_right)
-                        .setExitAnim(R.anim.slide_out_left)
-                        .setPopEnterAnim(R.anim.slide_in_left)
-                        .setPopExitAnim(R.anim.slide_out_right)
-                        .build();
-                navController.navigate(R.id.bibleFragment, null, navOptions, extras);
+                navController.navigate(R.id.action_loginFragment_to_bibleFragment);
             }
         });
 
@@ -161,13 +154,7 @@ public class LoginFragment extends Fragment {
 
                                 Bundle bundle = new Bundle();
                                 bundle.putString("email", editTextEmail.getEditText().getText().toString().trim());
-                                NavOptions navOptions = new NavOptions.Builder()
-                                        .setEnterAnim(R.anim.slide_in_right)
-                                        .setExitAnim(R.anim.slide_out_left)
-                                        .setPopEnterAnim(R.anim.slide_in_left)
-                                        .setPopExitAnim(R.anim.slide_out_right)
-                                        .build();
-                                navController.navigate(R.id.bibleFragment, bundle, navOptions, extras);
+                                navController.navigate(R.id.action_loginFragment_to_bibleFragment, bundle);
                             } else {
                                 Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
                             }
@@ -176,7 +163,6 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
-
         return root;
     }
 

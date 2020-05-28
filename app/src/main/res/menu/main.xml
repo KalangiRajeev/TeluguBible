@@ -4,19 +4,33 @@
 
 
     <item
-        android:id="@+id/action_logout"
-        android:icon="@drawable/ic_logout"
-        android:orderInCategory="100"
-        android:title="@string/action_logout"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_search"
         android:enabled="true"
         android:focusable="auto"
         android:icon="@drawable/ic_menu_search"
         android:title="@string/menu_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:id="@+id/action_previous"
+        android:icon="@drawable/ic_skip_previous"
+        android:title="Previous"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_next"
+        android:icon="@drawable/ic_skip_next"
+        android:title="Next"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_logout"
+        android:icon="@drawable/ic_logout"
+        android:orderInCategory="100"
+        android:title="@string/action_logout"
+        app:showAsAction="never" />
+
+
 
 </menu>
