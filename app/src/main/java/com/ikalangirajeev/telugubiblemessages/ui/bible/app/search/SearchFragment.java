@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -31,6 +33,7 @@ public class SearchFragment extends Fragment {
     private NavController navController;
     private SearchRecyclerViewAdapter searchRecyclerViewAdapter;
     private TextView textViewSearchCount;
+    private Button buttonSearchDict;
 
     String search;
 
@@ -47,6 +50,7 @@ public class SearchFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_search, container, false);
 
         textViewSearchCount = root.findViewById(R.id.textViewSearchCount);
+        buttonSearchDict = root.findViewById(R.id.searchDict);
         recyclerView = root.findViewById(R.id.recyclerView);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -74,6 +78,23 @@ public class SearchFragment extends Fragment {
                 });
             }
         });
+
+
+        buttonSearchDict.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("SearchDict", search);
+                navController.navigate(R.id.dictFragment, bundle, new NavOptions.Builder()
+                        .setPopUpTo(R.id.searchFragment, true)
+                        .setEnterAnim(R.anim.slide_in_right)
+                        .setExitAnim(R.anim.slide_out_left)
+                        .setPopEnterAnim(R.anim.slide_in_left)
+                        .setPopExitAnim(R.anim.slide_out_right)
+                        .build());
+            }
+        });
+
         return root;
     }
 

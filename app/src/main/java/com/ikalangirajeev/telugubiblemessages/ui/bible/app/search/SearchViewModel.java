@@ -104,7 +104,7 @@ public class SearchViewModel extends AndroidViewModel {
 
             Pattern pattern = Pattern.compile(searchableString);
             BackgroundColorSpan backgroundColorSpan = new BackgroundColorSpan(Color.YELLOW);
-            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.GREEN);
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLUE);
 
             for (int i = 0; i < bible.getBooks().size(); i++) {
                 for (int j = 0; j < bible.getBooks().get(i).getChapters().size(); j++) {

@@ -5,6 +5,20 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/splashScreenFragment">
 
+
+    <fragment
+        android:id="@+id/dictFragment"
+        android:name="com.ikalangirajeev.telugubiblemessages.ui.dictionary.DictionaryFragment"
+        android:label="Telugu Dictionary"
+        tools:layout="@layout/fragment_dictionary">
+        <argument
+            android:name="SearchDict"
+            android:defaultValue=""
+            app:argType="string"/>
+    </fragment>
+
+
+
     <fragment
         android:id="@+id/bibleFragment"
         android:name="com.ikalangirajeev.telugubiblemessages.ui.bible.app.books.BooksFragment"
@@ -80,6 +94,15 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_bibleFragment_to_dictFragment"
+            app:destination="@id/dictFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/dictFragment"
             app:popUpToInclusive="true" />
 
     </fragment>

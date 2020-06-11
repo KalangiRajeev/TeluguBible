@@ -22,17 +22,6 @@ public class BooksViewModel extends AndroidViewModel {
     private MutableLiveData<List<Data>> mText;
     List<Data> dataList = new ArrayList<>();
 
-    private String books[] = {
-            "ఆదికాండము", "నిర్గమకాండము", "లేవీయకాండము", "సంఖ్యాకాండము", "ద్వితీయోపదేశకాండమ", "యెహొషువ",
-            "న్యాయాధిపతులు", "రూతు", "I సమూయేలు", "II సమూయేలు", "I రాజులు",
-            "II రాజులు", "I దినవృత్తాంతములు", "II దినవృత్తాంతములు", "ఎజ్రా", "నెహెమ్యా", "ఎస్తేరు", "యోబు",
-            "కీర్తనల గ్రంథము", "సామెతలు", "ప్రసంగి", "పరమగీతము", "యెషయా", "యిర్మీయా", "విలాపవాక్యములు", "యెహెజ్కేలు",
-            "దానియేలు", "హొషేయ", "యోవేలు", "ఆమోసు", "ఓబద్యా", "యోనా", "మీకా", "నహూము", "హబక్కూకు", "జెఫన్యా",
-            "హగ్గయి", "జెకర్యా", "మలాకీ", "మత్తయి సువార్త", "మార్కు సువార్త", "లూకా సువార్త", "యోహాను సువార్త", "అపొస్తలుల కార్యములు",
-            "రోమీయులకు", "1 కొరింథీయులకు", "2 కొరింథీయులకు", "గలతీయులకు", "ఎఫెసీయులకు", "ఫిలిప్పీయులకు",
-            "కొలొస్సయులకు", "1 థెస్సలొనీకయులకు", "2 థెస్సలొనీకయులకు", "1 తిమోతికి", "2 తిమోతికి", "తీతుకు", "ఫిలేమోనుకు",
-            "హెబ్రీయులకు", "యాకోబు", "1 పేతురు", "2 పేతురు", "1 యోహాను", "2 యోహాను", "3 యోహాను", "యూదా", "ప్రకటన గ్రంథము"};
-
 
     public BooksViewModel(@NonNull Application application) {
         super(application);
@@ -41,33 +30,38 @@ public class BooksViewModel extends AndroidViewModel {
 
     public LiveData<List<Data>> getText() {
 
-        Bible bible = null;
         try {
-            bible = new MyAsyncTask(getApplication()).execute().get();
+            dataList = new MyAsyncTask(getApplication()).execute().get();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        dataList.clear();
-
-        for (int i = 0; i < bible.getBooks().size(); i++) {
-            Data data = new Data(books[i], "అధ్యాయాలు " + String.valueOf(bible.getBooks().get(i).getChapters().size()), 10);
-            dataList.add(data);
         }
 
         mText.setValue(dataList);
         return mText;
     }
 
-    private static class MyAsyncTask extends AsyncTask<Void, Void, Bible> {
 
+    private static class MyAsyncTask extends AsyncTask<Void, Void, List<Data>> {
+        private String books[] = {
+                "ఆదికాండము", "నిర్గమకాండము", "లేవీయకాండము", "సంఖ్యాకాండము", "ద్వితీయోపదేశకాండమ", "యెహొషువ",
+                "న్యాయాధిపతులు", "రూతు", "I సమూయేలు", "II సమూయేలు", "I రాజులు",
+                "II రాజులు", "I దినవృత్తాంతములు", "II దినవృత్తాంతములు", "ఎజ్రా", "నెహెమ్యా", "ఎస్తేరు", "యోబు",
+                "కీర్తనల గ్రంథము", "సామెతలు", "ప్రసంగి", "పరమగీతము", "యెషయా", "యిర్మీయా", "విలాపవాక్యములు", "యెహెజ్కేలు",
+                "దానియేలు", "హొషేయ", "యోవేలు", "ఆమోసు", "ఓబద్యా", "యోనా", "మీకా", "నహూము", "హబక్కూకు", "జెఫన్యా",
+                "హగ్గయి", "జెకర్యా", "మలాకీ", "మత్తయి సువార్త", "మార్కు సువార్త", "లూకా సువార్త", "యోహాను సువార్త", "అపొస్తలుల కార్యములు",
+                "రోమీయులకు", "1 కొరింథీయులకు", "2 కొరింథీయులకు", "గలతీయులకు", "ఎఫెసీయులకు", "ఫిలిప్పీయులకు",
+                "కొలొస్సయులకు", "1 థెస్సలొనీకయులకు", "2 థెస్సలొనీకయులకు", "1 తిమోతికి", "2 తిమోతికి", "తీతుకు", "ఫిలేమోనుకు",
+                "హెబ్రీయులకు", "యాకోబు", "1 పేతురు", "2 పేతురు", "1 యోహాను", "2 యోహాను", "3 యోహాను", "యూదా", "ప్రకటన గ్రంథము"};
         Application application;
+        List<Data> dataList;
 
         public MyAsyncTask(Application application) {
             this.application = application;
+            dataList = new ArrayList<>();
         }
 
         @Override
-        protected Bible doInBackground(Void... voids) {
+        protected List<Data> doInBackground(Void... voids) {
 
             String json = null;
             try {
@@ -85,7 +79,13 @@ public class BooksViewModel extends AndroidViewModel {
             }
             Gson gson = new Gson();
             Bible bible = gson.fromJson(json, Bible.class);
-            return bible;
+
+            for (int i = 0; i < bible.getBooks().size(); i++) {
+                Data data = new Data(books[i], "అధ్యాయాలు " + String.valueOf(bible.getBooks().get(i).getChapters().size()), 10);
+                dataList.add(data);
+            }
+
+            return dataList;
         }
     }
 

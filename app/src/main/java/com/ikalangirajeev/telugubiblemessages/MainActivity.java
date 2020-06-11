@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
     Uri imageUri;
     MaterialToolbar toolbar;
 
-    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();;
+    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,13 +126,13 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(FirebaseAuth.getInstance().getCurrentUser()!=null){
-                navController.navigate(R.id.createBlogFragment, null, new NavOptions.Builder()
-                        .setEnterAnim(R.anim.slide_in_right)
-                        .setExitAnim(R.anim.slide_out_left)
-                        .setPopEnterAnim(R.anim.slide_in_left)
-                        .setPopExitAnim(R.anim.slide_out_right)
-                        .build());
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    navController.navigate(R.id.createBlogFragment, null, new NavOptions.Builder()
+                            .setEnterAnim(R.anim.slide_in_right)
+                            .setExitAnim(R.anim.slide_out_left)
+                            .setPopEnterAnim(R.anim.slide_in_left)
+                            .setPopExitAnim(R.anim.slide_out_right)
+                            .build());
                 } else {
                     Toast.makeText(MainActivity.this, "Only Logged In User can See this page", Toast.LENGTH_LONG).show();
 
@@ -147,8 +148,23 @@ public class MainActivity extends AppCompatActivity {
                 navigationView.setCheckedItem(item.getItemId());
 
                 switch (item.getItemId()) {
+                    case R.id.shareApp:
+                        try {
+                            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                            shareIntent.setType("text/plain");
+                            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My Application Name");
+                            String shareMessage = "Let me recommend you this Application\n\n";
+                            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                            startActivity(Intent.createChooser(shareIntent, "Share via..."));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     case R.id.bibleFragment:
                         navController.navigate(R.id.bibleFragment);
+                        return true;
+                    case R.id.dictFragment:
+                        navController.navigate(R.id.dictFragment);
                         return true;
                     case R.id.blogsFragment:
                         navController.navigate(R.id.blogsFragment, null, new NavOptions.Builder()
@@ -159,19 +175,19 @@ public class MainActivity extends AppCompatActivity {
                                 .build());
                         return true;
                     case R.id.profileFragment:
-                        if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
+                        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                             navController.navigate(R.id.profileFragment, null, new NavOptions.Builder()
                                     .setEnterAnim(R.anim.slide_in_left)
                                     .setExitAnim(R.anim.slide_out_right)
                                     .setPopEnterAnim(R.anim.slide_in_right)
                                     .setPopExitAnim(R.anim.slide_out_left)
                                     .build());
-                        }else{
+                        } else {
                             Toast.makeText(MainActivity.this, "Only Logged In User can See this page", Toast.LENGTH_LONG).show();
                         }
                         return true;
                     case R.id.userBlogsFragment:
-                        if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
+                        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                             navController.navigate(R.id.userBlogsFragment, null, new NavOptions.Builder()
                                     .setEnterAnim(R.anim.slide_in_left)
                                     .setExitAnim(R.anim.slide_out_right)
@@ -202,6 +218,14 @@ public class MainActivity extends AppCompatActivity {
                         toolbar.setVisibility(View.GONE);
                         navigationView.setVisibility(View.GONE);
                         break;
+
+                    case R.id.dictFragment:
+                        fab.setVisibility(View.GONE);
+                        navigationView.setVisibility(View.VISIBLE);
+                        toolbar.setTitle("నిఘంటుశోధన");
+                        toolbar.setSubtitle("English-Telugu");
+                        break;
+
                     case R.id.bibleFragment:
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
@@ -212,13 +236,15 @@ public class MainActivity extends AppCompatActivity {
                             textViewNavHeaderUserEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                         }
                         break;
+
                     case R.id.chaptersFragment:
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
                         navigationView.setVisibility(View.VISIBLE);
-//                        toolbar.setTitle(Objects.requireNonNull(arguments).getString("BookName"));
+//                      toolbar.setTitle(Objects.requireNonNull(arguments).getString("BookName"));
                         toolbar.setSubtitle(arguments.getString("ChaptersCount"));
                         break;
+
                     case R.id.versesFragment:
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
@@ -227,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
                         int chapterNumber = arguments.getInt("ChapterNumber") + 1;
                         toolbar.setSubtitle(chapterNumber + "వ అధ్యాయము");
                         break;
+
                     case R.id.searchFragment:
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
@@ -234,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
                         toolbar.setTitle("పరిశుద్ధ గ్రంథములో ");
                         toolbar.setSubtitle("వెతకండి ఏదైనా...");
                         break;
+
                     case R.id.blogsFragment:
                         fab.setVisibility(View.VISIBLE);
                         toolbar.setVisibility(View.VISIBLE);
@@ -248,6 +276,7 @@ public class MainActivity extends AppCompatActivity {
                         toolbar.setTitle(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                         toolbar.setSubtitle("Posts...");
                         break;
+
                     case R.id.createBlogFragment:
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
@@ -255,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
                         toolbar.setTitle("Create a Post");
                         toolbar.setSubtitle("As you wish...");
                         break;
+
                     case R.id.detailBlogFragment:
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
@@ -332,12 +362,25 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(navController.getCurrentDestination().getId()==R.id.blogsFragment) {
+                if (navController.getCurrentDestination().getId() == R.id.blogsFragment) {
                     searchView.clearFocus();
                     Bundle bundle = new Bundle();
                     bundle.putString("SearchBlogs", query);
                     NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
                     navController.navigate(R.id.blogsFragment, bundle, new NavOptions.Builder()
+                            .setPopUpTo(R.id.blogsFragment, true)
+                            .setEnterAnim(R.anim.slide_in_right)
+                            .setExitAnim(R.anim.slide_out_left)
+                            .setPopEnterAnim(R.anim.slide_in_left)
+                            .setPopExitAnim(R.anim.slide_out_right)
+                            .build());
+                } else if (navController.getCurrentDestination().getId() == R.id.dictFragment) {
+                    searchView.clearFocus();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("SearchDict", query);
+                    NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
+                    navController.navigate(R.id.dictFragment, bundle, new NavOptions.Builder()
+                            .setPopUpTo(R.id.dictFragment, true)
                             .setEnterAnim(R.anim.slide_in_right)
                             .setExitAnim(R.anim.slide_out_left)
                             .setPopEnterAnim(R.anim.slide_in_left)
@@ -385,7 +428,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_search:
                 NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-                     return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+                return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
 
             case R.id.action_logout:
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {

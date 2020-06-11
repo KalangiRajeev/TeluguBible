@@ -7,8 +7,8 @@ android {
         applicationId "com.ikalangirajeev.telugubiblemessages"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 6
-        versionName "1.5"
+        versionCode 7
+        versionName "1.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -60,8 +60,12 @@ dependencies {
     //Androidx Recyclerview
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
-// json.simple decoder
+    //json.simple decoder
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+    //Room Database
+    implementation "androidx.room:room-runtime:2.2.5"
+    annotationProcessor "androidx.room:room-compiler:2.2.5"
 
 }
 configurations {

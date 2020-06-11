@@ -9,7 +9,10 @@
             android:id="@+id/bibleFragment"
             android:icon="@drawable/ic_menu_book"
             android:title="@string/menu_bible" />
-
+        <item
+            android:id="@+id/dictFragment"
+            android:icon="@drawable/ic_boy"
+            android:title="@string/eng_tel_dictionary"/>
 
     </group>
 
@@ -32,5 +35,15 @@
 
         </menu>
     </item>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/shareApp"
+                android:title="Share App"
+                android:icon="@drawable/ic_menu_share"/>
+        </menu>
+    </item>
+
 
 </menu>
