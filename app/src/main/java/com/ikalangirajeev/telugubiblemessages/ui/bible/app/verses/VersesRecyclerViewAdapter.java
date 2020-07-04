@@ -96,7 +96,7 @@ public class VersesRecyclerViewAdapter extends RecyclerView.Adapter<VersesRecycl
         public void setData(Data data) {
             this.headerTextView.setText(data.getHeader());
             this.bodyTextView.setText(data.getBody());
-            this.linkedRefs.setText(String.valueOf(data.getRefsLinks()));
+            this.linkedRefs.setText(String.valueOf(data.getRefLink()));
         }
 
 //        public void setListeners() {

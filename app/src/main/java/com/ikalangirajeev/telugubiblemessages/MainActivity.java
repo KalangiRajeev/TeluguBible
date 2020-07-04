@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 navigationView.setCheckedItem(item.getItemId());
-
+                Bundle bundle = new Bundle();
                 switch (item.getItemId()) {
                     case R.id.shareApp:
                         try {
@@ -160,8 +160,21 @@ public class MainActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    case R.id.bibleFragment:
-                        navController.navigate(R.id.bibleFragment);
+                    case R.id.teluguBible:
+                        bundle.putString("bible", "bible_telugu");
+                        navController.navigate(R.id.bibleFragment, bundle);
+                        return true;
+                    case R.id.englishBible:
+                        bundle.putString("bible", "bible_english");
+                        navController.navigate(R.id.bibleFragment, bundle);
+                        return true;
+                    case R.id.tamilBible:
+                        bundle.putString("bible", "bible_tamil");
+                        navController.navigate(R.id.bibleFragment, bundle);
+                        return true;
+                    case R.id.kannadaBible:
+                        bundle.putString("bible", "bible_kannada");
+                        navController.navigate(R.id.bibleFragment, bundle);
                         return true;
                     case R.id.dictFragment:
                         navController.navigate(R.id.dictFragment);
@@ -230,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
                         navigationView.setVisibility(View.VISIBLE);
-                        toolbar.setSubtitle("66 పుస్తకములు");
+                        toolbar.setSubtitle("66 Books");
                         if (firebaseUser != null && firebaseUser.getDisplayName() != null) {
                             textViewNavHeaderUserLoggedIn.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                             textViewNavHeaderUserEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
@@ -250,16 +263,15 @@ public class MainActivity extends AppCompatActivity {
                         toolbar.setVisibility(View.VISIBLE);
                         navigationView.setVisibility(View.VISIBLE);
 //                        toolbar.setTitle(Objects.requireNonNull(arguments).getString("BookName"));
-                        int chapterNumber = arguments.getInt("ChapterNumber") + 1;
-                        toolbar.setSubtitle(chapterNumber + "వ అధ్యాయము");
+                        int chapterNumber = arguments.getInt("ChapterNumber");
+                        toolbar.setSubtitle( "Chapter " + chapterNumber);
                         break;
 
                     case R.id.searchFragment:
                         fab.setVisibility(View.GONE);
                         toolbar.setVisibility(View.VISIBLE);
                         navigationView.setVisibility(View.VISIBLE);
-                        toolbar.setTitle("పరిశుద్ధ గ్రంథములో ");
-                        toolbar.setSubtitle("వెతకండి ఏదైనా...");
+                        toolbar.setTitle("Search in Bible ");
                         break;
 
                     case R.id.blogsFragment:

@@ -42,6 +42,7 @@ public class VersesFragment extends Fragment {
 
 
     private String bookName;
+    private String bibleSelected;
     private int bookNumber;
     private int chapterNumber;
     private int chapterCount;
@@ -52,6 +53,7 @@ public class VersesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.bibleSelected = getArguments().getString("bible");
         this.bookName = getArguments().getString("BookName");
         this.bookNumber = getArguments().getInt("BookNumber");
         this.chapterNumber = getArguments().getInt("ChapterNumber");
@@ -137,8 +139,6 @@ public class VersesFragment extends Fragment {
                 ViewModelProviders.of(this).get(VersesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_verses, container, false);
 
-        versesViewModel.setBookNumber(bookNumber);
-        versesViewModel.setChapterNumber(chapterNumber);
 
         recyclerView = root.findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -167,12 +167,13 @@ public class VersesFragment extends Fragment {
                     Toast.makeText(getActivity(), "Linked References...", Toast.LENGTH_LONG).show();
                     BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
                     Bundle bundle = new Bundle();
+                    bundle.putString("bible", bibleSelected);
                     bundle.putString("bookName", bookName);
                     bundle.putInt("bookNumber", bookNumber);
                     bundle.putInt("chapterNumber", chapterNumber);
                     bundle.putInt("verseNumber", viewHolder.getAdapterPosition());
-                    bundle.putString("verseBody", myRecyclerViewAdapter.getDataAt(viewHolder.getAdapterPosition()).getHeader());
-                    bundle.putInt("verseId", myRecyclerViewAdapter.getDataAt(viewHolder.getAdapterPosition()).getRefsLinks());
+                    bundle.putString("verseBody", myRecyclerViewAdapter.getDataAt(viewHolder.getAdapterPosition()).getBody());
+                    bundle.putInt("verseId", myRecyclerViewAdapter.getDataAt(viewHolder.getAdapterPosition()).getRefLink());
                     bottomSheetFragment.setArguments(bundle);
                     bottomSheetFragment.show(getActivity().getSupportFragmentManager(), "bottomSheetFragment");
 
@@ -194,7 +195,7 @@ public class VersesFragment extends Fragment {
 
 
         try {
-            versesViewModel.getData().observe(getViewLifecycleOwner(), new Observer<List<Data>>() {
+            versesViewModel.getData(bibleSelected, bookName, bookNumber, chapterNumber).observe(getViewLifecycleOwner(), new Observer<List<Data>>() {
                 @Override
                 public void onChanged(List<Data> dataList) {
                     myRecyclerViewAdapter = new VersesRecyclerViewAdapter(getActivity(), R.layout.card_view_verses, dataList);

@@ -2,15 +2,21 @@ package com.ikalangirajeev.telugubiblemessages.ui.bible.app.linkedrefs;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.gson.Gson;
-import com.ikalangirajeev.telugubiblemessages.ui.bible.app.Bible;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.BibleDatabase;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.EnglishBible;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.KannadaBible;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.KannadaBibleDao;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.TamilBible;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.TamilBibleDao;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.TeluguBible;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.EnglishBibleDao;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.TeluguBibleDao;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -34,7 +40,7 @@ public class BottomSheetViewModel extends AndroidViewModel {
         linkedVersesList = new MutableLiveData<>();
     }
 
-    public LiveData<List<LinkVerse>> getData(Integer verseId) {
+    public LiveData<List<LinkVerse>> getData(String bibleSelected, Integer verseId) {
 
 
         try {
@@ -43,12 +49,31 @@ public class BottomSheetViewModel extends AndroidViewModel {
             e.printStackTrace();
         }
 
-        try {
-            linkVerseList = new LinkVersesAsyncTask(getApplication()).execute(verseInfoList).get();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (bibleSelected.equals("bible_english")) {
+            try {
+                linkVerseList = new EnglishVersesAsyncTask(getApplication()).execute(verseInfoList).get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (bibleSelected.equals("bible_tamil")){
+            try {
+                linkVerseList = new TamilVersesAsyncTask(getApplication()).execute(verseInfoList).get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (bibleSelected.equals("bible_kannada")){
+            try {
+                linkVerseList = new KannadaVersesAsyncTask(getApplication()).execute(verseInfoList).get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                linkVerseList = new TeluguVersesAsyncTask(getApplication()).execute(verseInfoList).get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
         linkedVersesList.setValue(linkVerseList);
         return linkedVersesList;
     }
@@ -113,10 +138,9 @@ public class BottomSheetViewModel extends AndroidViewModel {
                                         break;
                                     }
                                 }
-                                chapterNumber = Integer.parseInt(splitString[1]) - 1;
-                                verseNumber = Integer.parseInt(splitString[2]) - 1;
-                                VerseInfo verseInfo = new VerseInfo(Integer.parseInt(linkVerseId), bookNumber,
-                                        chapterNumber, verseNumber);
+                                chapterNumber = Integer.parseInt(splitString[1]) ;
+                                verseNumber = Integer.parseInt(splitString[2]);
+                                VerseInfo verseInfo = new VerseInfo(Integer.parseInt(linkVerseId), bookNumber, chapterNumber, verseNumber);
                                 verseInfoList.add(verseInfo);
                             }
                         }
@@ -130,11 +154,11 @@ public class BottomSheetViewModel extends AndroidViewModel {
         }
     }
 
-    private class LinkVersesAsyncTask extends AsyncTask<List<VerseInfo>, Void, List<LinkVerse>> {
+    private class TeluguVersesAsyncTask extends AsyncTask<List<VerseInfo>, Void, List<LinkVerse>> {
         Application application;
         List<LinkVerse> linkVerseList;
         List<VerseInfo> verseInfoList;
-        String jsonBibleString;
+        TeluguBibleDao teluguBibleDao;
         private String books[] = {
                 "ఆదికాండము", "నిర్గమకాండము", "లేవీయకాండము", "సంఖ్యాకాండము", "ద్వితీయోపదేశకాండమ", "యెహొషువ",
                 "న్యాయాధిపతులు", "రూతు", "I సమూయేలు", "II సమూయేలు", "I రాజులు",
@@ -146,8 +170,11 @@ public class BottomSheetViewModel extends AndroidViewModel {
                 "కొలొస్సయులకు", "1 థెస్సలొనీకయులకు", "2 థెస్సలొనీకయులకు", "1 తిమోతికి", "2 తిమోతికి", "తీతుకు", "ఫిలేమోనుకు",
                 "హెబ్రీయులకు", "యాకోబు", "1 పేతురు", "2 పేతురు", "1 యోహాను", "2 యోహాను", "3 యోహాను", "యూదా", "ప్రకటన గ్రంథము"};
 
-        public LinkVersesAsyncTask(Application application) {
+
+        public TeluguVersesAsyncTask(Application application) {
             this.application = application;
+            BibleDatabase bibleDatabase = BibleDatabase.getBibleDatabase(application);
+            teluguBibleDao = bibleDatabase.teluguBibleDao();
             linkVerseList = new ArrayList<>();
             verseInfoList = new ArrayList<>();
         }
@@ -156,31 +183,148 @@ public class BottomSheetViewModel extends AndroidViewModel {
         protected List<LinkVerse> doInBackground(List<VerseInfo>... lists) {
             verseInfoList.addAll(lists[0]);
 
-            try {
-                InputStream inputStream = application.getAssets().open("new_telugu_bible.json");
-                byte[] bytes = new byte[inputStream.available()];
-                inputStream.read(bytes);
-                inputStream.close();
-                jsonBibleString = new String(bytes, "UTF-8");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            Gson gson = new Gson();
-            Bible bible = gson.fromJson(jsonBibleString, Bible.class);
-//            Log.d("Bible", "doInBackground: " + bible.toString());
-            for (VerseInfo verseInfo : verseInfoList) {
+           for (VerseInfo verseInfo : verseInfoList) {
 
-                String verseBody = bible.getBooks().get(verseInfo.getBookNumber())
-                        .getChapters().get(verseInfo.getChapterNumber())
-                        .getVerses().get(verseInfo.getVerseNumber())
-                        .getVerse();
+                TeluguBible verse = teluguBibleDao.getTeluguBibleVerse(verseInfo.getBookNumber(), verseInfo.getChapterNumber(), verseInfo.getVerseNumber());
 
-                String chapterNumber = String.valueOf(verseInfo.getChapterNumber() + 1);
-                String verseNumber = String.valueOf(verseInfo.getVerseNumber() + 1);
+                Integer chapterNumber = verse.getChapter();
+                Integer verseNumber = verse.getVersecount();
 
                 String verseHeader = books[verseInfo.getBookNumber()] + " " + chapterNumber + ":" + verseNumber;
-                LinkVerse linkVerse = new LinkVerse(verseHeader, verseBody);
+                LinkVerse linkVerse = new LinkVerse(verseHeader, verse.getVerse());
+                linkVerseList.add(linkVerse);
+            }
+            return linkVerseList;
+        }
+    }
+
+    private class EnglishVersesAsyncTask extends AsyncTask<List<VerseInfo>, Void, List<LinkVerse>> {
+        Application application;
+        List<LinkVerse> linkVerseList;
+        List<VerseInfo> verseInfoList;
+        EnglishBibleDao englishBibleDao;
+        private String books[] = {
+                "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua",
+                "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles",
+                "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes",
+                "Song of Solomon", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel",
+                "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah",
+                "Haggai", "Zechariah", "Malachi", "Matthew", "Mark", "Luke", "John", "Acts", "Romans",
+                "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians",
+                "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon",
+                "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"};
+
+
+        public EnglishVersesAsyncTask(Application application) {
+            this.application = application;
+            BibleDatabase bibleDatabase = BibleDatabase.getBibleDatabase(application);
+            englishBibleDao = bibleDatabase.englishBibleDao();
+            linkVerseList = new ArrayList<>();
+            verseInfoList = new ArrayList<>();
+        }
+
+        @Override
+        protected List<LinkVerse> doInBackground(List<VerseInfo>... lists) {
+            verseInfoList.addAll(lists[0]);
+
+
+            for (VerseInfo verseInfo : verseInfoList) {
+
+                EnglishBible verse = englishBibleDao.getEnglishBibleVerse(verseInfo.getBookNumber(), verseInfo.getChapterNumber(), verseInfo.getVerseNumber());
+
+                Integer chapterNumber = verse.getChapter();
+                Integer verseNumber = verse.getVersecount();
+
+                String verseHeader = books[verseInfo.getBookNumber()] + " " + chapterNumber + ":" + verseNumber;
+                LinkVerse linkVerse = new LinkVerse(verseHeader, verse.getVerse());
+                linkVerseList.add(linkVerse);
+            }
+            return linkVerseList;
+        }
+    }
+
+    private class TamilVersesAsyncTask extends AsyncTask<List<VerseInfo>, Void, List<LinkVerse>> {
+        Application application;
+        List<LinkVerse> linkVerseList;
+        List<VerseInfo> verseInfoList;
+        TamilBibleDao tamilBibleDao;
+        private String books[] = {
+                "ஆதியாகமம்", "யாத்திராகமம்", "லேவியராகமம்", "எண்ணாகமம்", "உபாகமம்", "யோசுவா", "நியாயாதிபதிகள்", "ரூத்", "1 சாமுவேல்",
+                "2 சாமுவேல்", "1 இராஜாக்கள்", "2 இராஜாக்கள்", "1 நாளாகமம்", "2 நாளாகமம்", "எஸ்றா", "நெகேமியா", "எஸ்தர்", "யோபு",
+                "சங்கீதம்", "நீதிமொழிகள்", "பிரசங்கி", "உன்னதப்பாட்டு", "ஏசாயா", "எரேமியா", "புலம்பல்", "எசேக்கியேல்", "தானியேல்", "ஓசியா",
+                "யோவேல்", "ஆமோஸ்", "ஒபதியா", "யோனா", "மீகா", "நாகூம்", "ஆபகூக்", "செப்பனியா", "ஆகாய்", "சகரியா", "மல்கியா",
+                "மத்தேயு", "மாற்கு", "லுூக்கா", "யோவான்", "அப்போஸ்தலர்", "ரோமர்", "1 கொரிந்தியர்", "2 கொரிந்தியர்", "கலாத்தியர்",
+                "எபேசியர்", "பிலிப்பியர்", "கொலோசெயர்", "1 தெசலோனிக்கேயர்", "2 தெசலோனிக்கேயர்", "1 தீமோத்தேயு", "2 தீமோத்தேயு", "தீத்து",
+                "பிலேமோன்", "எபிரெயர்", "யாக்கோபு", "1 பேதுரு", "2 பேதுரு", "1 யோவான்", "2 யோவான்", "3 யோவான்", "யூதா", "வெளி"};
+
+
+        public TamilVersesAsyncTask(Application application) {
+            this.application = application;
+            BibleDatabase bibleDatabase = BibleDatabase.getBibleDatabase(application);
+            tamilBibleDao = bibleDatabase.tamilBibleDao();
+            linkVerseList = new ArrayList<>();
+            verseInfoList = new ArrayList<>();
+        }
+
+        @Override
+        protected List<LinkVerse> doInBackground(List<VerseInfo>... lists) {
+            verseInfoList.addAll(lists[0]);
+
+
+            for (VerseInfo verseInfo : verseInfoList) {
+
+                TamilBible verse = tamilBibleDao.getTamilBibleVerse(verseInfo.getBookNumber(), verseInfo.getChapterNumber(), verseInfo.getVerseNumber());
+
+                Integer chapterNumber = verseInfo.getChapterNumber();
+                Integer verseNumber = verseInfo.getVerseNumber();
+
+                String verseHeader = books[verseInfo.getBookNumber()] + " " + chapterNumber + ":" + verseNumber;
+                LinkVerse linkVerse = new LinkVerse(verseHeader, verse.getVerse());
+                linkVerseList.add(linkVerse);
+            }
+            return linkVerseList;
+        }
+    }
+
+    private class KannadaVersesAsyncTask extends AsyncTask<List<VerseInfo>, Void, List<LinkVerse>> {
+        Application application;
+        List<LinkVerse> linkVerseList;
+        List<VerseInfo> verseInfoList;
+        KannadaBibleDao kannadaBibleDao;
+        private String books[] = {
+                "ಆದಿಕಾಂಡ", "ವಿಮೋಚನಕಾಂಡ", "ಯಾಜಕಕಾಂಡ", "ಅರಣ್ಯಕಾಂಡ", "ಧರ್ಮೋಪದೇಶಕಾಂಡ", "ಯೆಹೋಶುವ", "ನ್ಯಾಯಸ್ಥಾಪಕರು",
+                "ರೂತಳು", "1 ಸಮುವೇಲನು", "2 ಸಮುವೇಲನು", "1 ಅರಸುಗಳು", "2 ಅರಸುಗಳು", "1 ಪೂರ್ವಕಾಲವೃತ್ತಾ", "2 ಪೂರ್ವಕಾಲವೃತ್ತಾ",
+                "ಎಜ್ರನು", "ನೆಹೆಮಿಯ", "ಎಸ್ತೇರಳು", "ಯೋಬನು", "ಕೀರ್ತನೆಗಳು", "ಙ್ಞಾನೋಕ್ತಿಗಳು", "ಪ್ರಸಂಗಿ", "ಪರಮ ಗೀತ", "ಯೆಶಾಯ",
+                "ಯೆರೆಮಿಯ", "ಪ್ರಲಾಪಗಳು", "ಯೆಹೆಜ್ಕೇಲನು", "ದಾನಿಯೇಲನು", "ಹೋಶೇ", "ಯೋವೇಲ", "ಆಮೋಸ", "ಓಬದ್ಯ", "ಯೋನ", "ಮಿಕ",
+                "ನಹೂಮ", "ಹಬಕ್ಕೂಕ್ಕ", "ಚೆಫನ್ಯ", "ಹಗ್ಗಾಯ", "ಜೆಕರ್ಯ", "ಮಲಾಕಿಯ", "ಮತ್ತಾಯನು", "ಮಾರ್ಕನು", "ಲೂಕನು", "ಯೋಹಾನನು",
+                "ಅಪೊಸ್ತಲರ ಕೃತ್ಯಗ", "ರೋಮಾಪುರದವರಿಗೆ", "1 ಕೊರಿಂಥದವರಿಗೆ", "2 ಕೊರಿಂಥದವರಿಗೆ", "ಗಲಾತ್ಯದವರಿಗೆ", "ಎಫೆಸದವರಿಗೆ",
+                "ಫಿಲಿಪ್ಪಿಯವರಿಗೆ", "ಕೊಲೊಸ್ಸೆಯವರಿಗೆ", "1 ಥೆಸಲೊನೀಕದವರಿಗೆ", "2 ಥೆಸಲೊನೀಕದವರಿಗೆ", "1 ತಿಮೊಥೆಯನಿಗೆ", "2 ತಿಮೊಥೆಯನಿಗೆ",
+                "ತೀತನಿಗೆ", "ಫಿಲೆಮೋನನಿಗೆ", "ಇಬ್ರಿಯರಿಗೆ", "ಯಾಕೋಬನು", "1 ಪೇತ್ರನು", "2 ಪೇತ್ರನು", "1 ಯೋಹಾನನು", "2 ಯೋಹಾನನು",
+                "3 ಯೋಹಾನನು", "ಯೂದನು", "ಪ್ರಕಟನೆ"};
+
+        public KannadaVersesAsyncTask(Application application) {
+            this.application = application;
+            BibleDatabase bibleDatabase = BibleDatabase.getBibleDatabase(application);
+            kannadaBibleDao = bibleDatabase.kannadaBibleDao();
+            linkVerseList = new ArrayList<>();
+            verseInfoList = new ArrayList<>();
+        }
+
+        @Override
+        protected List<LinkVerse> doInBackground(List<VerseInfo>... lists) {
+            verseInfoList.addAll(lists[0]);
+
+
+            for (VerseInfo verseInfo : verseInfoList) {
+
+                KannadaBible verse = kannadaBibleDao.getKannadaBibleVerse(verseInfo.getBookNumber(), verseInfo.getChapterNumber(), verseInfo.getVerseNumber());
+
+                Integer chapterNumber = verse.getChapter();
+                Integer verseNumber = verse.getVersecount();
+
+                String verseHeader = books[verseInfo.getBookNumber()] + " " + chapterNumber + ":" + verseNumber;
+                LinkVerse linkVerse = new LinkVerse(verseHeader, verse.getVerse());
                 linkVerseList.add(linkVerse);
             }
             return linkVerseList;

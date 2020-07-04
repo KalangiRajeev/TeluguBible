@@ -26,8 +26,12 @@
         tools:layout="@layout/fragment_books">
 
         <argument
+            android:name="bible"
+            android:defaultValue=""
+            app:argType="string"/>
+        <argument
             android:name="BookName"
-            android:defaultValue="None"
+            android:defaultValue=""
             app:argType="string" />
         <argument
             android:name="BookNumber"
@@ -39,8 +43,8 @@
             app:argType="integer" />
         <argument
             android:name="ChaptersCount"
-            android:defaultValue="None"
-            app:argType="string" />
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
             android:id="@+id/action_bibleFragment_to_chaptersFragment"
             app:destination="@id/chaptersFragment"
@@ -123,7 +127,10 @@
             app:popUpTo="@id/versesFragment"
             app:popUpToInclusive="true" />
 
-
+        <argument
+            android:name="bible"
+            android:defaultValue=""
+            app:argType="string"/>
         <argument
             android:name="BookName"
             android:defaultValue="0"
@@ -136,6 +143,10 @@
             android:name="ChapterNumber"
             android:defaultValue="0"
             app:argType="integer" />
+        <argument
+            android:name="chaptersCount"
+            android:defaultValue="0"
+            app:argType="integer"/>
 
     </fragment>
 
@@ -146,6 +157,10 @@
         android:label="{BookName}"
         tools:layout="@layout/fragment_verses">
 
+        <argument
+            android:name="bible"
+            android:defaultValue=""
+            app:argType="string"/>
         <argument
             android:name="BookName"
             android:defaultValue="None"
@@ -172,6 +187,10 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
 
+        <argument
+            android:name="bible"
+            android:defaultValue=""
+            app:argType="string"/>
         <argument
             android:name="BookName"
             android:defaultValue="Search Results..."
@@ -408,5 +427,16 @@
             app:popUpTo="@id/splashScreenFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <dialog
+        android:id="@+id/bottomSheetFragment"
+        android:name="com.ikalangirajeev.telugubiblemessages.ui.bible.app.linkedrefs.BottomSheetFragment"
+        android:label="BottomSheetFragment" >
+
+        <argument
+            android:name="bible"
+            android:defaultValue=""
+            app:argType="string"/>
+    </dialog>
 
 </navigation>

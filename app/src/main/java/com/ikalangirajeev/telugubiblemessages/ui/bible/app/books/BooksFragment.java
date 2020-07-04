@@ -13,11 +13,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.FragmentNavigator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ikalangirajeev.telugubiblemessages.MainActivity;
 import com.ikalangirajeev.telugubiblemessages.R;
 import com.ikalangirajeev.telugubiblemessages.ui.bible.app.Data;
 import com.ikalangirajeev.telugubiblemessages.ui.bible.app.MyRecyclerViewAdapter;
@@ -34,11 +32,13 @@ public class BooksFragment extends Fragment {
     private BooksViewModel booksViewModel;
     private RecyclerView recyclerView;
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
+    private String bibleSelected;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        bibleSelected = getArguments().getString("bible");
     }
 
     @Nullable
@@ -55,7 +55,7 @@ public class BooksFragment extends Fragment {
                 GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        booksViewModel.getText().observe(getViewLifecycleOwner(), new Observer<List<Data>>() {
+        booksViewModel.getText(bibleSelected).observe(getViewLifecycleOwner(), new Observer<List<Data>>() {
             @Override
             public void onChanged(List<Data> blogIndexList) {
                 myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(), R.layout.card_view_books, blogIndexList);
@@ -63,15 +63,16 @@ public class BooksFragment extends Fragment {
 
                 myRecyclerViewAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
                     @Override
-                    public void OnItemClick(Data blogIndex, int position) {
+                    public void OnItemClick(Data data, int position) {
 //                        FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
 //                                .addSharedElement(recyclerView.getChildAt(position), "books_chapters")
 //                                .build();
 
                         Bundle bundle = new Bundle();
-                        bundle.putString("BookName", blogIndex.getHeader());
+                        bundle.putString("bible", bibleSelected);
+                        bundle.putString("BookName", data.getHeader());
                         bundle.putInt("BookNumber", position);
-                        bundle.putString("ChaptersCount", blogIndex.getBody());
+                        bundle.putInt("ChaptersCount", data.getRefLink());
                         navController.navigate(R.id.action_bibleFragment_to_chaptersFragment, bundle);
                     }
                 });

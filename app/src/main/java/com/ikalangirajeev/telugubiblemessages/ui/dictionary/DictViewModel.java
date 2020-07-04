@@ -14,7 +14,6 @@ import java.util.List;
 public class DictViewModel extends AndroidViewModel {
     private static final String TAG = "DictViewModel";
     private LiveData<List<DictEngTel>> mdictEngTelList;
-    private List<DictEngTel> dictList;
 
     private DictDao dictDao;
 

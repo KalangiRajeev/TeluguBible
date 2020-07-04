@@ -41,9 +41,7 @@ public class SplashScreenFragment extends Fragment {
     private int currentApiVersion;
 
     private ImageView imageView;
-    private TextView textView;
     private AnimatorSet animatorSet;
-    private ConstraintLayout splashSreenRoot;
 
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -80,7 +78,6 @@ public class SplashScreenFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
         ((MainActivity)getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
@@ -88,15 +85,12 @@ public class SplashScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_splash_screen, container, false);
 
         imageView = root.findViewById(R.id.splashScreenImage);
-        textView = root.findViewById(R.id.splashTextView);
-        splashSreenRoot = root.findViewById(R.id.splashScreenRoot);
 
         animatorSet = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.splash_screen_animator);
-        animatorSet.setTarget(splashSreenRoot);
+        animatorSet.setTarget(imageView);
         animatorSet.start();
 
         new Handler().postDelayed(new Runnable() {

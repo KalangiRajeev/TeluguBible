@@ -3,13 +3,18 @@ package com.ikalangirajeev.telugubiblemessages.ui.bible.app;
 public class Data {
     private String header;
     private String body;
-    private int refsLinks;
+    private int refLink;
 
 
-    public Data(String header, String body, int refsLinks) {
+    public Data(String header, String body) {
         this.header = header;
         this.body = body;
-        this.refsLinks = refsLinks;
+    }
+
+    public Data(String header, String body, int refLink) {
+        this.header = header;
+        this.body = body;
+        this.refLink = refLink;
     }
 
     public String getHeader() {
@@ -20,7 +25,7 @@ public class Data {
         return body;
     }
 
-    public int getRefsLinks() {
-        return refsLinks;
+    public int getRefLink() {
+        return refLink;
     }
 }

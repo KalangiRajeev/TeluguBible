@@ -30,7 +30,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private BottomSheetRecyclerViewAdapter bottomSheetRecyclerViewAdapter;
 
 
-    private String bookName, verseBody;
+    private String bookName, verseBody, bibleSelected;
     private int bookNumber;
     private int chapterNumber;
     private int verseNumber;
@@ -40,6 +40,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bibleSelected = getArguments().getString("bible");
         bookName = (getArguments().getString("bookName")!= null) ? getArguments().getString("bookName") : "";
         verseBody = (getArguments().getString("verseBody")!= null) ? getArguments().getString("verseBody") : "";
         bookNumber = getArguments().getInt("bookNumber");
@@ -66,15 +67,15 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        textViewHeader.setText(bookName + " " + (chapterNumber + 1) + ":" + (verseNumber + 1));
+        textViewHeader.setText(bookName + " " + (chapterNumber) + ":" + (verseNumber + 1));
         textViewBody.setText(verseBody);
 
-        bottomSheetViewModel.getData(verseId).observe(getViewLifecycleOwner(), new Observer<List<LinkVerse>>() {
+        bottomSheetViewModel.getData(bibleSelected, verseId).observe(getViewLifecycleOwner(), new Observer<List<LinkVerse>>() {
             @Override
             public void onChanged(List<LinkVerse> linkVerses) {
                 bottomSheetRecyclerViewAdapter = new BottomSheetRecyclerViewAdapter(getActivity(), R.layout.card_view_bottomsheet, linkVerses);
                 recyclerView.setAdapter(bottomSheetRecyclerViewAdapter);
-                linkedRefsCount.setText(bottomSheetRecyclerViewAdapter.getItemCount() + " సంబంధిత వచనాలు " );
+                linkedRefsCount.setText(bottomSheetRecyclerViewAdapter.getItemCount() + " Cross References " );
             }
         });
         return view;

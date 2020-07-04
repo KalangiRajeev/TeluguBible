@@ -8,27 +8,6 @@
     android:background="@color/cardBackground"
     android:transitionName="rootTransition">
 
-    <TextView
-        android:id="@+id/splashTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="30dp"
-        android:background="@color/cardBackground"
-        android:gravity="center"
-        android:text="పరిశుద్ధ గ్రంధము"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/splashScreenImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <ImageView
         android:id="@+id/splashScreenImage"
@@ -40,9 +19,8 @@
         android:transitionName="logoImage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/splashTextView"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_jesus_foreground" />
 
 

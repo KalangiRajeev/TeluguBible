@@ -35,7 +35,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
 
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -89,9 +88,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             bodyTextView = itemView.findViewById(R.id.textViewChapters);
         }
 
-        public void setData(Data blogIndex) {
-            this.headerTextView.setText(blogIndex.getHeader());
-            this.bodyTextView.setText(blogIndex.getBody());
+        public void setData(Data data) {
+            this.headerTextView.setText(data.getHeader());
+            this.bodyTextView.setText(data.getBody());
         }
 
         public void setListeners() {

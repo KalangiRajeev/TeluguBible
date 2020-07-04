@@ -5,10 +5,23 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
         <item
-            android:id="@+id/bibleFragment"
+            android:id="@+id/englishBible"
+            android:icon="@drawable/ic_menu_book"
+            android:title="English Bible" />
+        <item
+            android:id="@+id/teluguBible"
             android:icon="@drawable/ic_menu_book"
             android:title="@string/menu_bible" />
+        <item
+            android:id="@+id/kannadaBible"
+            android:icon="@drawable/ic_menu_book"
+            android:title="Kannada Bible" />
+        <item
+            android:id="@+id/tamilBible"
+            android:icon="@drawable/ic_menu_book"
+            android:title="Tamil Bible" />
         <item
             android:id="@+id/dictFragment"
             android:icon="@drawable/ic_boy"
