@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/bibleFragment"
         android:name="com.ikalangirajeev.telugubiblemessages.ui.bible.app.books.BooksFragment"
-        android:label="పరిశుద్ధ గ్రంధము"
+        android:label="BIBLE"
         tools:layout="@layout/fragment_books">
 
         <argument
@@ -189,7 +189,7 @@
 
         <argument
             android:name="bible"
-            android:defaultValue=""
+            android:defaultValue="bible_english"
             app:argType="string"/>
         <argument
             android:name="BookName"

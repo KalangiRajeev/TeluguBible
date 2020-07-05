@@ -9,19 +9,27 @@
         <item
             android:id="@+id/englishBible"
             android:icon="@drawable/ic_menu_book"
-            android:title="English Bible" />
+            android:title="@string/english_bible" />
         <item
             android:id="@+id/teluguBible"
             android:icon="@drawable/ic_menu_book"
             android:title="@string/menu_bible" />
         <item
+            android:id="@+id/hindiBible"
+            android:icon="@drawable/ic_menu_book"
+            android:title="@string/hindi_bible" />
+        <item
             android:id="@+id/kannadaBible"
             android:icon="@drawable/ic_menu_book"
-            android:title="Kannada Bible" />
+            android:title="@string/kannada_bible" />
         <item
             android:id="@+id/tamilBible"
             android:icon="@drawable/ic_menu_book"
-            android:title="Tamil Bible" />
+            android:title="@string/tamil_bible" />
+        <item
+            android:id="@+id/malayalamBible"
+            android:icon="@drawable/ic_menu_book"
+            android:title="@string/malayalam_bible" />
         <item
             android:id="@+id/dictFragment"
             android:icon="@drawable/ic_boy"

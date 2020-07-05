@@ -11,7 +11,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.ikalangirajeev.telugubiblemessages.ui.bible.app.Data;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.BibleDatabase;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.EnglishBibleDao;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.HindiBibleDao;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.KannadaBibleDao;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.MalayalamBibleDao;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.TamilBibleDao;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.TeluguBibleDao;
 
@@ -61,6 +63,28 @@ public class BooksViewModel extends AndroidViewModel {
             "ಫಿಲಿಪ್ಪಿಯವರಿಗೆ", "ಕೊಲೊಸ್ಸೆಯವರಿಗೆ", "1 ಥೆಸಲೊನೀಕದವರಿಗೆ", "2 ಥೆಸಲೊನೀಕದವರಿಗೆ", "1 ತಿಮೊಥೆಯನಿಗೆ", "2 ತಿಮೊಥೆಯನಿಗೆ",
             "ತೀತನಿಗೆ", "ಫಿಲೆಮೋನನಿಗೆ", "ಇಬ್ರಿಯರಿಗೆ", "ಯಾಕೋಬನು", "1 ಪೇತ್ರನು", "2 ಪೇತ್ರನು", "1 ಯೋಹಾನನು", "2 ಯೋಹಾನನು",
             "3 ಯೋಹಾನನು", "ಯೂದನು", "ಪ್ರಕಟನೆ"};
+    private String hindiBooks[] = {
+            "उत्पत्ति","निर्गमन","लैव्यवस्था","गिनती","व्यवस्थाविवरण","यहोशू ",
+            "न्यायियों","रूत","1 शमूएल","2 शमूएल","1 राजा","2 राजा",
+            "1 इतिहास","2 इतिहास","एज्रा","नहेमायाह","एस्तेर","अय्यूब",
+            "भजन संहिता","नीतिवचन ","सभोपदेशक","श्रेष्ठगीत","यशायाह","यिर्मयाह",
+            "विलापगीत","यहेजकेल","दानिय्येल","होशे","योएल","आमोस","ओबद्दाह",
+            "योना","मीका","नहूम","हबक्कूक","सपन्याह","हाग्गै","जकर्याह",
+            "मलाकी","मत्ती","मरकुस","लूका","यूहन्ना","प्रेरितों के काम","रोमियो",
+            "1 कुरिन्थियों","2 कुरिन्थियों","गलातियों","इफिसियों","फिलिप्पियों","कुलुस्सियों",
+            "1 थिस्सलुनीकियों","2 थिस्सलुनीकियों","1 तीमुथियुस","2 तीमुथियुस","तीतुस",
+            "फिलेमोन","इब्रानियों","याकूब","1 पतरस","2 पतरस","1 यूहन्ना","2 यूहन्ना",
+            "3 यूहन्ना","यहूदा","प्रकाशित वाक्य" };
+    private String malayalamBooks [] = {"ഉല്പത്തി", "പുറപ്പാട്", "ലേവ്യപുസ്തകം", "സംഖ്യാപുസ്തകം", "ആവർത്തനം", "യോശുവ", "ന്യായാധിപന്മാർ",
+            "രൂത്ത്", "1 ശമൂവേൽ", "2 ശമൂവേൽ", "1 രാജാക്കന്മാർ", "2 രാജാക്കന്മാർ", "1 ദിനവൃത്താന്തം",
+            "2 ദിനവൃത്താന്തം", "എസ്രാ", "നെഹെമ്യാവു", "എസ്ഥേർ", "ഇയ്യോബ്", "സങ്കീർത്തനങ്ങൾ",
+            "സദൃശ്യവാക്യങ്ങൾ", "സഭാപ്രസംഗി", "ഉത്തമഗീതം", "യെശയ്യാ", "യിരമ്യാവു", "വിലാപങ്ങൾ",
+            "യെഹേസ്കേൽ", "ദാനീയേൽ", "ഹോശേയ", "യോവേൽ", "ആമോസ്", "ഓബദ്യാവു", "യോനാ",
+            "മീഖാ", "നഹൂം", "ഹബക്കൂക്ക്", "സെഫന്യാവു", "ഹഗ്ഗായി", "സെഖര്യാവു", "മലാഖി", "മത്തായി",
+            "മർക്കൊസ്", "ലൂക്കോസ്", "യോഹന്നാൻ", "പ്രവൃത്തികൾ", "റോമർ", "1 കൊരിന്ത്യർ", "2 കൊരിന്ത്യർ",
+            "ഗലാത്യർ", "എഫെസ്യർ", "ഫിലിപ്പിയർ", "കൊലൊസ്സ്യർ", "1 തെസ്സലൊനീക്യർ", "2 തെസ്സലൊനീക്യർ",
+            "1 തിമൊഥെയൊസ്", "2 തിമൊഥെയൊസ്", "തീത്തൊസ്", "ഫിലേമോൻ", "എബ്രായർ", "യാക്കോബ്",
+            "1 പത്രൊസ്", "2 പത്രൊസ്", "1 യോഹന്നാൻ", "2 യോഹന്നാൻ", "3 യോഹന്നാൻ","യൂദാ", "വെളിപ്പാട്" };
 
     private Integer chaptersCount;
     private List<Data> dataList;
@@ -112,6 +136,32 @@ public class BooksViewModel extends AndroidViewModel {
                     e.printStackTrace();
                 }
                 Data data = new Data(kannadaBooks[i], chaptersCount + " ಅಧ್ಯಾಯಗಳು", chaptersCount);
+                dataList.add(data);
+            }
+        } else if (bibleSelected.equals("bible_hindi")){
+            dataList.clear();
+            for (int i=0; i< hindiBooks.length; i++) {
+                try {
+                    chaptersCount = new HindiBibleAsyncTask(application).execute(i).get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Data data = new Data(hindiBooks[i], chaptersCount + " अध्याय", chaptersCount);
+                dataList.add(data);
+            }
+        } else if (bibleSelected.equals("bible_malayalam")){
+            dataList.clear();
+            for (int i=0; i< malayalamBooks.length; i++) {
+                try {
+                    chaptersCount = new MalayalamBibleAsyncTask(application).execute(i).get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Data data = new Data(malayalamBooks[i], chaptersCount + " അധ്യായങ്ങൾ", chaptersCount);
                 dataList.add(data);
             }
         } else {
@@ -190,6 +240,37 @@ public class BooksViewModel extends AndroidViewModel {
         @Override
         protected Integer doInBackground(Integer... integers) {
             chaptersCount = kannadaBibleDao.getChaptersCount(integers[0]);
+            return chaptersCount;
+        }
+    }
+
+    private static class HindiBibleAsyncTask extends AsyncTask<Integer, Void, Integer>{
+        private HindiBibleDao hindiBibleDao;
+        private Integer chaptersCount;
+
+        public HindiBibleAsyncTask(Application application) {
+            BibleDatabase bibleDatabase = BibleDatabase.getBibleDatabase(application);
+            hindiBibleDao = bibleDatabase.hindiBibleDao();
+        }
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            chaptersCount = hindiBibleDao.getChaptersCount(integers[0]);
+            return chaptersCount;
+        }
+    }
+    private static class MalayalamBibleAsyncTask extends AsyncTask<Integer, Void, Integer>{
+        private MalayalamBibleDao malayalamBibleDao;
+        private Integer chaptersCount;
+
+        public MalayalamBibleAsyncTask(Application application) {
+            BibleDatabase bibleDatabase = BibleDatabase.getBibleDatabase(application);
+            malayalamBibleDao = bibleDatabase.malayalamBibleDao();
+        }
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            chaptersCount = malayalamBibleDao.getChaptersCount(integers[0]);
             return chaptersCount;
         }
     }

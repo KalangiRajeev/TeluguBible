@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DictRecyclerViewAdapter extends RecyclerView.Adapter<DictRecyclerViewAdapter.MyViewHolder> {
+public class    DictRecyclerViewAdapter extends RecyclerView.Adapter<DictRecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
     private int layoutResource;

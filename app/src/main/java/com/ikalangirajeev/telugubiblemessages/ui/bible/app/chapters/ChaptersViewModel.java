@@ -11,7 +11,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.ikalangirajeev.telugubiblemessages.ui.bible.app.Data;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.BibleDatabase;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.EnglishBibleDao;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.HindiBibleDao;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.KannadaBibleDao;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.MalayalamBibleDao;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.TamilBibleDao;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.TeluguBibleDao;
 
@@ -50,7 +52,7 @@ public class ChaptersViewModel extends AndroidViewModel {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Data data = new Data(String.valueOf(i), "verses " + versesCount);
+                Data data = new Data(String.valueOf(i),  versesCount +" Verses" );
                 dataList.add(data);
             }
         } else if (bibleSelected.equals("bible_tamil")) {
@@ -63,7 +65,7 @@ public class ChaptersViewModel extends AndroidViewModel {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Data data = new Data(String.valueOf(i), "வசனங்கள் " + versesCount);
+                Data data = new Data(String.valueOf(i),  versesCount + " வசனங்கள்");
                 dataList.add(data);
             }
         } else if (bibleSelected.equals("bible_kannada")){
@@ -76,7 +78,33 @@ public class ChaptersViewModel extends AndroidViewModel {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Data data = new Data(String.valueOf(i), "ಪದ್ಯಗಳು " + versesCount);
+                Data data = new Data(String.valueOf(i), versesCount + " ಪದ್ಯಗಳು" );
+                dataList.add(data);
+            }
+        } else if (bibleSelected.equals("bible_hindi")){
+            dataList.clear();
+            for (int i = 1; i <= chaptersCount; i++){
+                try {
+                    versesCount = new HindiBibleAsyncTask(application).execute(bookNumber, i).get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Data data = new Data(String.valueOf(i), "   " + versesCount + " छंद   " );
+                dataList.add(data);
+            }
+        } else if (bibleSelected.equals("bible_malayalam")){
+            dataList.clear();
+            for (int i = 1; i <= chaptersCount; i++){
+                try {
+                    versesCount = new MalayalamBibleAsyncTask(application).execute(bookNumber, i).get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Data data = new Data(String.valueOf(i),  versesCount + " വാക്യങ്ങൾ" );
                 dataList.add(data);
             }
         } else {
@@ -89,7 +117,7 @@ public class ChaptersViewModel extends AndroidViewModel {
                } catch (InterruptedException e) {
                    e.printStackTrace();
                }
-               Data data = new Data(String.valueOf(i), "వచనాలు " + versesCount);
+               Data data = new Data(String.valueOf(i), versesCount + " వచనాలు");
                dataList.add(data);
            }
         }
@@ -155,6 +183,37 @@ public class ChaptersViewModel extends AndroidViewModel {
         @Override
         protected Integer doInBackground(Integer... integers) {
             versesCount = teluguBibleDao.getVersesCount(integers[0], integers[1]);
+            return versesCount;
+        }
+    }
+    private static class HindiBibleAsyncTask extends AsyncTask<Integer, Void, Integer> {
+
+        private HindiBibleDao hindiBibleDao;
+        private Integer versesCount;
+
+        public HindiBibleAsyncTask(Application application) {
+            BibleDatabase bibleDatabase = BibleDatabase.getBibleDatabase(application);
+            hindiBibleDao = bibleDatabase.hindiBibleDao();
+        }
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            versesCount = hindiBibleDao.getVersesCount(integers[0], integers[1]);
+            return versesCount;
+        }
+    }
+
+    private static class MalayalamBibleAsyncTask extends AsyncTask<Integer, Void, Integer> {
+
+        private MalayalamBibleDao malayalamBibleDao;
+        private Integer versesCount;
+
+        public MalayalamBibleAsyncTask(Application application) {
+            BibleDatabase bibleDatabase = BibleDatabase.getBibleDatabase(application);
+            malayalamBibleDao = bibleDatabase.malayalamBibleDao();
+        }
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            versesCount = malayalamBibleDao.getVersesCount(integers[0], integers[1]);
             return versesCount;
         }
     }

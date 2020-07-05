@@ -78,9 +78,10 @@ public class VersesFragment extends Fragment {
         menuNext.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (chapterNumber<chapterCount-1) {
+                if (chapterNumber < chapterCount) {
 
                     Bundle bundleNext = new Bundle();
+                    bundleNext.putString("bible", bibleSelected);
                     bundleNext.putString("BookName", bookName);
                     bundleNext.putInt("BookNumber", bookNumber);
                     bundleNext.putInt("ChapterNumber", chapterNumber + 1);
@@ -106,8 +107,9 @@ public class VersesFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                if(chapterNumber>0) {
+                if(chapterNumber > 1) {
                     Bundle bundlePrevious = new Bundle();
+                    bundlePrevious.putString("bible", bibleSelected);
                     bundlePrevious.putString("BookName", bookName);
                     bundlePrevious.putInt("BookNumber", bookNumber);
                     bundlePrevious.putInt("ChapterNumber", chapterNumber - 1);

@@ -24,5 +24,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="eng_tel_dictionary">Eng-Tel Dictionary</string>
+    <string name="hindi_bible">Hindi Bible</string>
+    <string name="malayalam_bible">Malayalam Bible</string>
+    <string name="tamil_bible">Tamil Bible</string>
+    <string name="kannada_bible">Kannada Bible</string>
+    <string name="english_bible">English Bible</string>
 
 </resources>

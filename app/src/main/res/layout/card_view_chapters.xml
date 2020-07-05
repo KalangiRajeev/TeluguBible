@@ -8,7 +8,7 @@
     android:layout_gravity="center"
     android:transitionName="chapters_verses"
     app:cardBackgroundColor="#DBDBDB"
-    app:cardCornerRadius="32dp"
+    app:cardCornerRadius="8dp"
     app:cardElevation="1dp">
 
     <LinearLayout

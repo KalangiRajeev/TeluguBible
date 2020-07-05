@@ -7,7 +7,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {EnglishBible.class, TamilBible.class, TeluguBible.class, KannadaBible.class}, version = 1, exportSchema = false)
+@Database(entities = {EnglishBible.class, TamilBible.class, TeluguBible.class, KannadaBible.class, HindiBible.class, MalayalamBible.class}, version = 1, exportSchema = false)
 public abstract class BibleDatabase extends RoomDatabase {
 
     private static BibleDatabase bibleDatabase;
@@ -16,6 +16,8 @@ public abstract class BibleDatabase extends RoomDatabase {
     public abstract TeluguBibleDao teluguBibleDao();
     public abstract TamilBibleDao tamilBibleDao();
     public abstract KannadaBibleDao kannadaBibleDao();
+    public abstract HindiBibleDao hindiBibleDao();
+    public abstract MalayalamBibleDao malayalamBibleDao();
 
     public static synchronized BibleDatabase getBibleDatabase(Context context){
 

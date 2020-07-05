@@ -2,6 +2,11 @@ package com.ikalangirajeev.telugubiblemessages.ui.bible.app.search;
 
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +20,8 @@ import com.ikalangirajeev.telugubiblemessages.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecyclerViewAdapter.MyViewHolder> {
 
@@ -24,12 +31,14 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
     private LayoutInflater layoutInflater;
     private OnItemClickListener onItemClickListener;
     private int layoutResource;
+    private String searchString;
 
-    public SearchRecyclerViewAdapter(Context context, int layoutResource, List<SearchData> dataList) {
+    public SearchRecyclerViewAdapter(Context context, int layoutResource, List<SearchData> dataList, String searchString) {
         this.context = context;
         this.layoutResource = layoutResource;
         layoutInflater = LayoutInflater.from(context);
         this.dataList = dataList;
+        this.searchString = searchString;
         setHasStableIds(true);
     }
 
@@ -80,9 +89,16 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
 
         public void setData(SearchData data) {
             this.headerTextView.setText(data.getHeader());
-            this.headerTextView.setTextIsSelectable(false);
-            this.bodyTextView.setText(data.getBody());
-            this.bodyTextView.setTextIsSelectable(false);
+            Pattern pattern = Pattern.compile(searchString);
+            Matcher matcher = pattern.matcher(data.getBody());
+            BackgroundColorSpan backgroundColorSpan = new BackgroundColorSpan(Color.YELLOW);
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLUE);
+            Spannable spannable = new SpannableString(data.getBody());
+            while(matcher.find()){
+                spannable.setSpan(foregroundColorSpan, matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannable.setSpan(backgroundColorSpan, matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            this.bodyTextView.setText(spannable);
         }
 
         public void setListeners() {

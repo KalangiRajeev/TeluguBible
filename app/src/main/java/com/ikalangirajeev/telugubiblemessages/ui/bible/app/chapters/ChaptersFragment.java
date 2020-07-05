@@ -56,7 +56,7 @@ public class ChaptersFragment extends Fragment {
 
 
         recyclerView = root.findViewById(R.id.recyclerView);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 4);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 5);
         recyclerView.setLayoutManager(layoutManager);
 
 

@@ -35,11 +35,12 @@ public class SearchFragment extends Fragment {
     private TextView textViewSearchCount;
     private Button buttonSearchDict;
 
-    String search;
+    String search, bibleSelected;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bibleSelected = getArguments().getString("bible");
         search = getArguments().getString("SearchData");
     }
 
@@ -56,12 +57,10 @@ public class SearchFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        searchViewModel.setSearchableString(search);
-
-        searchViewModel.getSearchDataList().observe(getViewLifecycleOwner(), new Observer<List<SearchData>>() {
+        searchViewModel.getSearchDataList(bibleSelected, search).observe(getViewLifecycleOwner(), new Observer<List<SearchData>>() {
             @Override
             public void onChanged(List<SearchData> searchData) {
-                searchRecyclerViewAdapter = new SearchRecyclerViewAdapter(getActivity(), R.layout.card_view_verses, searchData);
+                searchRecyclerViewAdapter = new SearchRecyclerViewAdapter(getActivity(), R.layout.card_view_verses, searchData, search);
                 recyclerView.setAdapter(searchRecyclerViewAdapter);
                 textViewSearchCount.setText(searchData.size() + " Results");
 
@@ -69,9 +68,10 @@ public class SearchFragment extends Fragment {
                     @Override
                     public void OnItemClick(SearchData searchData, int position) {
                         Bundle bundle = new Bundle();
+                        bundle.putString("bible", bibleSelected);
                         bundle.putString("BookName", searchData.getBookName());
                         bundle.putInt("BookNumber", searchData.getBookNumber());
-                        bundle.putInt("ChapterNumber", searchData.getChapterNumber());
+                        bundle.putInt("ChapterNumber", searchData.getChapternumber());
                         bundle.putInt("HighlightVerseNumber", searchData.getVerseNumber());
                         navController.navigate(R.id.action_searchFragment_to_versesFragment, bundle);
                     }

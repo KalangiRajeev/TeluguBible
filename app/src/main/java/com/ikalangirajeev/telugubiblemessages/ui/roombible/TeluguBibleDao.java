@@ -22,5 +22,5 @@ public interface TeluguBibleDao {
     Integer getVersesCount(int bookNo, int chapterNo);
 
     @Query("SELECT * FROM bible_telugu WHERE verse LIKE '%'||:query||'%' ORDER BY Book ASC")
-    List<EnglishBible> getQueriedBibleList(String query);
+    List<TeluguBible> getQueriedBibleList(String query);
 }

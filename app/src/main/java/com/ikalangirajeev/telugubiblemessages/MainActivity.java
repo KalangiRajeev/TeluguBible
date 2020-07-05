@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavController navController;
     private NavigationView navigationView;
+    private String bibleSelected = "bible_english";
 
     TextView textViewNavHeaderUserLoggedIn;
     TextView textViewNavHeaderUserEmail;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     MaterialToolbar toolbar;
 
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-    ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -161,20 +161,70 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     case R.id.teluguBible:
-                        bundle.putString("bible", "bible_telugu");
-                        navController.navigate(R.id.bibleFragment, bundle);
+                        bibleSelected = "bible_telugu";
+                        bundle.putString("bible", bibleSelected);
+                        navController.navigate(R.id.bibleFragment, bundle, new NavOptions.Builder()
+                                .setPopUpTo(R.id.bibleFragment, true)
+                                .setEnterAnim(R.anim.slide_in_right)
+                                .setExitAnim(R.anim.slide_out_left)
+                                .setPopEnterAnim(R.anim.slide_in_left)
+                                .setPopExitAnim(R.anim.slide_out_right)
+                                .build());
                         return true;
                     case R.id.englishBible:
-                        bundle.putString("bible", "bible_english");
-                        navController.navigate(R.id.bibleFragment, bundle);
+                        bibleSelected = "bible_english";
+                        bundle.putString("bible", bibleSelected);
+                        navController.navigate(R.id.bibleFragment, bundle, new NavOptions.Builder()
+                                .setPopUpTo(R.id.bibleFragment, true)
+                                .setEnterAnim(R.anim.slide_in_right)
+                                .setExitAnim(R.anim.slide_out_left)
+                                .setPopEnterAnim(R.anim.slide_in_left)
+                                .setPopExitAnim(R.anim.slide_out_right)
+                                .build());
+                        return true;
+                    case R.id.hindiBible:
+                        bibleSelected = "bible_hindi";
+                        bundle.putString("bible", bibleSelected);
+                        navController.navigate(R.id.bibleFragment, bundle, new NavOptions.Builder()
+                                .setPopUpTo(R.id.bibleFragment, true)
+                                .setEnterAnim(R.anim.slide_in_right)
+                                .setExitAnim(R.anim.slide_out_left)
+                                .setPopEnterAnim(R.anim.slide_in_left)
+                                .setPopExitAnim(R.anim.slide_out_right)
+                                .build());
+                        return true;
+                    case R.id.malayalamBible:
+                        bibleSelected = "bible_malayalam";
+                        bundle.putString("bible", bibleSelected);
+                        navController.navigate(R.id.bibleFragment, bundle, new NavOptions.Builder()
+                                .setPopUpTo(R.id.bibleFragment, true)
+                                .setEnterAnim(R.anim.slide_in_right)
+                                .setExitAnim(R.anim.slide_out_left)
+                                .setPopEnterAnim(R.anim.slide_in_left)
+                                .setPopExitAnim(R.anim.slide_out_right)
+                                .build());
                         return true;
                     case R.id.tamilBible:
-                        bundle.putString("bible", "bible_tamil");
-                        navController.navigate(R.id.bibleFragment, bundle);
+                        bibleSelected = "bible_tamil";
+                        bundle.putString("bible", bibleSelected);
+                        navController.navigate(R.id.bibleFragment, bundle, new NavOptions.Builder()
+                                .setPopUpTo(R.id.bibleFragment, true)
+                                .setEnterAnim(R.anim.slide_in_right)
+                                .setExitAnim(R.anim.slide_out_left)
+                                .setPopEnterAnim(R.anim.slide_in_left)
+                                .setPopExitAnim(R.anim.slide_out_right)
+                                .build());
                         return true;
                     case R.id.kannadaBible:
-                        bundle.putString("bible", "bible_kannada");
-                        navController.navigate(R.id.bibleFragment, bundle);
+                        bibleSelected = "bible_kannada";
+                        bundle.putString("bible", bibleSelected);
+                        navController.navigate(R.id.bibleFragment, bundle, new NavOptions.Builder()
+                                .setPopUpTo(R.id.bibleFragment, true)
+                                .setEnterAnim(R.anim.slide_in_right)
+                                .setExitAnim(R.anim.slide_out_left)
+                                .setPopEnterAnim(R.anim.slide_in_left)
+                                .setPopExitAnim(R.anim.slide_out_right)
+                                .build());
                         return true;
                     case R.id.dictFragment:
                         navController.navigate(R.id.dictFragment);
@@ -401,6 +451,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     searchView.clearFocus();
                     Bundle bundle = new Bundle();
+                    bundle.putString("bible", bibleSelected);
                     bundle.putString("SearchData", query);
                     NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
                     navController.navigate(R.id.searchFragment, bundle, new NavOptions.Builder()
@@ -468,6 +519,4 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
-
-
 }

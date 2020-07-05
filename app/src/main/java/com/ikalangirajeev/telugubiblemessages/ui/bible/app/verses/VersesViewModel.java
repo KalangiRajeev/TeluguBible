@@ -12,8 +12,12 @@ import com.ikalangirajeev.telugubiblemessages.ui.bible.app.Data;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.BibleDatabase;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.EnglishBible;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.EnglishBibleDao;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.HindiBible;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.HindiBibleDao;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.KannadaBible;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.KannadaBibleDao;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.MalayalamBible;
+import com.ikalangirajeev.telugubiblemessages.ui.roombible.MalayalamBibleDao;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.TamilBible;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.TamilBibleDao;
 import com.ikalangirajeev.telugubiblemessages.ui.roombible.TeluguBible;
@@ -58,6 +62,18 @@ public class VersesViewModel extends AndroidViewModel {
         } else if (bibleSelected.equals("bible_kannada")){
             List<KannadaBible> kannadaBibleList = new KannadaAsyncTask(application).execute(bookNumber, chapterNumber).get();
             for (KannadaBible verse : kannadaBibleList){
+                Data data = new Data(bookName + " " + verse.getChapter() + ":" + verse.getVersecount(), verse.getVerse(), verse.getVerseid());
+                dataList.add(data);
+            }
+        } else if (bibleSelected.equals("bible_hindi")){
+            List<HindiBible> hindiBibleList = new HindiAsyncTask(application).execute(bookNumber, chapterNumber).get();
+            for (HindiBible verse : hindiBibleList){
+                Data data = new Data(bookName + " " + verse.getChapter() + ":" + verse.getVersecount(), verse.getVerse(), verse.getVerseid());
+                dataList.add(data);
+            }
+        } else if (bibleSelected.equals("bible_malayalam")){
+            List<MalayalamBible> malayalamBibleList = new MalayalamAsyncTask(application).execute(bookNumber, chapterNumber).get();
+            for (MalayalamBible verse : malayalamBibleList){
                 Data data = new Data(bookName + " " + verse.getChapter() + ":" + verse.getVersecount(), verse.getVerse(), verse.getVerseid());
                 dataList.add(data);
             }
@@ -122,6 +138,28 @@ public class VersesViewModel extends AndroidViewModel {
             return teluguBibleDao.getTeluguBibleList(integers[0], integers[1]);
         }
     }
+    private static class HindiAsyncTask extends AsyncTask<Integer, Void, List<HindiBible>>{
+        private HindiBibleDao hindiBibleDao;
 
+        public HindiAsyncTask (Application application){
+            BibleDatabase bibleDatabase = BibleDatabase.getBibleDatabase(application);
+            hindiBibleDao = bibleDatabase.hindiBibleDao();
+        }
+        @Override
+        protected List<HindiBible> doInBackground(Integer... integers) {
+            return hindiBibleDao.getHindiBibleList(integers[0], integers[1]);
+        }
+    }
+    private static class MalayalamAsyncTask extends AsyncTask<Integer, Void, List<MalayalamBible>>{
+        private MalayalamBibleDao malayalamBibleDao;
 
+        public MalayalamAsyncTask (Application application){
+            BibleDatabase bibleDatabase = BibleDatabase.getBibleDatabase(application);
+            malayalamBibleDao = bibleDatabase.malayalamBibleDao();
+        }
+        @Override
+        protected List<MalayalamBible> doInBackground(Integer... integers) {
+            return malayalamBibleDao.getMalayalamBibleList(integers[0], integers[1]);
+        }
+    }
 }

@@ -3,35 +3,23 @@ package com.ikalangirajeev.telugubiblemessages.ui.bible.app.search;
 import android.text.Spannable;
 
 public class SearchData {
-    private Spannable header;
+    private String header;
     private String body;
-    private int bookNumber;
-    private int chapterNumber;
-    private int verseNumber;
-    private  String bookName;
+    private String bookName;
+    private Integer bookNumber;
+    private Integer chapternumber;
+    private Integer verseNumber;
 
-    public SearchData(Spannable header, String body) {
+    public SearchData(String header, String body, String bookName, Integer bookNumber, Integer chapternumber, Integer verseNumber) {
         this.header = header;
         this.body = body;
-    }
-
-    public void setBookNumber(int bookNumber) {
+        this.bookName = bookName;
         this.bookNumber = bookNumber;
-    }
-
-    public void setChapterNumber(int chapterNumber) {
-        this.chapterNumber = chapterNumber;
-    }
-
-    public void setVerseNumber(int verseNumber) {
+        this.chapternumber = chapternumber;
         this.verseNumber = verseNumber;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
-
-    public Spannable getHeader() {
+    public String getHeader() {
         return header;
     }
 
@@ -39,19 +27,19 @@ public class SearchData {
         return body;
     }
 
-    public int getBookNumber() {
+    public String getBookName() {
+        return bookName;
+    }
+
+    public Integer getBookNumber() {
         return bookNumber;
     }
 
-    public int getChapterNumber() {
-        return chapterNumber;
+    public Integer getChapternumber() {
+        return chapternumber;
     }
 
-    public int getVerseNumber() {
+    public Integer getVerseNumber() {
         return verseNumber;
-    }
-
-    public String getBookName() {
-        return bookName;
     }
 }
