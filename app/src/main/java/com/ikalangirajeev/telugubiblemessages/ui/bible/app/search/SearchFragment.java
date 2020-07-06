@@ -72,7 +72,7 @@ public class SearchFragment extends Fragment {
                         bundle.putString("BookName", searchData.getBookName());
                         bundle.putInt("BookNumber", searchData.getBookNumber());
                         bundle.putInt("ChapterNumber", searchData.getChapternumber());
-                        bundle.putInt("HighlightVerseNumber", searchData.getVerseNumber());
+                        bundle.putInt("HighlightVerseNumber", searchData.getVerseNumber()-1);
                         navController.navigate(R.id.action_searchFragment_to_versesFragment, bundle);
                     }
                 });

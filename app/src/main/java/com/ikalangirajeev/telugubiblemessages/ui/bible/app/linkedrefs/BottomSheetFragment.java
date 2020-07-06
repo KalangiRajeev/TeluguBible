@@ -80,5 +80,4 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         });
         return view;
     }
-
 }
