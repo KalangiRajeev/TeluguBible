@@ -48,37 +48,37 @@ public class VersesViewModel extends AndroidViewModel {
     public LiveData<List<Data>> getData(String bibleSelected, String bookName, int bookNumber, int chapterNumber) throws ExecutionException, InterruptedException {
 
         if (bibleSelected.equals("bible_english")) {
-           List<EnglishBible> englishBibleList = new EnglishAsyncTask(application).execute(bookNumber, chapterNumber).get();
+           List<EnglishBible> englishBibleList = new EnglishAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bookNumber, chapterNumber).get();
            for (EnglishBible verse : englishBibleList){
                Data data = new Data(bookName + " " + verse.getChapter() + ":" + verse.getVersecount(), verse.getVerse(), verse.getVerseid());
                dataList.add(data);
            }
         } else if (bibleSelected.equals("bible_tamil")){
-            List<TamilBible> tamilBibleList = new TamilAsyncTask(application).execute(bookNumber, chapterNumber).get();
+            List<TamilBible> tamilBibleList = new TamilAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bookNumber, chapterNumber).get();
             for (TamilBible verse : tamilBibleList){
                 Data data = new Data(bookName + " " + verse.getChapter() + ":" + verse.getVersecount(), verse.getVerse(), verse.getVerseid());
                 dataList.add(data);
             }
         } else if (bibleSelected.equals("bible_kannada")){
-            List<KannadaBible> kannadaBibleList = new KannadaAsyncTask(application).execute(bookNumber, chapterNumber).get();
+            List<KannadaBible> kannadaBibleList = new KannadaAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bookNumber, chapterNumber).get();
             for (KannadaBible verse : kannadaBibleList){
                 Data data = new Data(bookName + " " + verse.getChapter() + ":" + verse.getVersecount(), verse.getVerse(), verse.getVerseid());
                 dataList.add(data);
             }
         } else if (bibleSelected.equals("bible_hindi")){
-            List<HindiBible> hindiBibleList = new HindiAsyncTask(application).execute(bookNumber, chapterNumber).get();
+            List<HindiBible> hindiBibleList = new HindiAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bookNumber, chapterNumber).get();
             for (HindiBible verse : hindiBibleList){
                 Data data = new Data(bookName + " " + verse.getChapter() + ":" + verse.getVersecount(), verse.getVerse(), verse.getVerseid());
                 dataList.add(data);
             }
         } else if (bibleSelected.equals("bible_malayalam")){
-            List<MalayalamBible> malayalamBibleList = new MalayalamAsyncTask(application).execute(bookNumber, chapterNumber).get();
+            List<MalayalamBible> malayalamBibleList = new MalayalamAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bookNumber, chapterNumber).get();
             for (MalayalamBible verse : malayalamBibleList){
                 Data data = new Data(bookName + " " + verse.getChapter() + ":" + verse.getVersecount(), verse.getVerse(), verse.getVerseid());
                 dataList.add(data);
             }
         } else {
-            List<TeluguBible> teluguBibleList = new TeluguAsyncTask(application).execute(bookNumber, chapterNumber).get();
+            List<TeluguBible> teluguBibleList = new TeluguAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bookNumber, chapterNumber).get();
             for (TeluguBible verse : teluguBibleList){
                 Data data = new Data(bookName + " " + verse.getChapter() + ":" + verse.getVersecount(), verse.getVerse(), verse.getVerseid());
                 dataList.add(data);

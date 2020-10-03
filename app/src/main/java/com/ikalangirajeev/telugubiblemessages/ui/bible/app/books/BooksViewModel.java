@@ -103,7 +103,7 @@ public class BooksViewModel extends AndroidViewModel {
             dataList.clear();
             for (int i = 0; i < englishBooks.length; i++) {
                 try {
-                    chaptersCount = new EnglishBibleAsyncTask(application).execute(i).get();
+                    chaptersCount = new EnglishBibleAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,i).get();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -116,7 +116,7 @@ public class BooksViewModel extends AndroidViewModel {
             dataList.clear();
             for (int i = 0; i < tamilBooks.length; i++) {
                 try {
-                    chaptersCount = new TamilBibleAsyncTask(application).execute(i).get();
+                    chaptersCount = new TamilBibleAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, i).get();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -129,7 +129,7 @@ public class BooksViewModel extends AndroidViewModel {
             dataList.clear();
             for (int i = 0; i < kannadaBooks.length; i++) {
                 try {
-                    chaptersCount = new KannadaBibleAsyncTask(application).execute(i).get();
+                    chaptersCount = new KannadaBibleAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,i).get();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -142,7 +142,7 @@ public class BooksViewModel extends AndroidViewModel {
             dataList.clear();
             for (int i=0; i< hindiBooks.length; i++) {
                 try {
-                    chaptersCount = new HindiBibleAsyncTask(application).execute(i).get();
+                    chaptersCount = new HindiBibleAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, i).get();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -155,7 +155,7 @@ public class BooksViewModel extends AndroidViewModel {
             dataList.clear();
             for (int i=0; i< malayalamBooks.length; i++) {
                 try {
-                    chaptersCount = new MalayalamBibleAsyncTask(application).execute(i).get();
+                    chaptersCount = new MalayalamBibleAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,i).get();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -168,7 +168,7 @@ public class BooksViewModel extends AndroidViewModel {
             dataList.clear();
             for (int i = 0; i < teluguBooks.length; i++) {
                 try {
-                    chaptersCount = new TeluguBibleAsyncTask(application).execute(i).get();
+                    chaptersCount = new TeluguBibleAsyncTask(application).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, i).get();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

@@ -1,20 +1,20 @@
 package com.ikalangirajeev.telugubiblemessages;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,16 +23,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
-import androidx.navigation.NavGraph;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -43,7 +39,6 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavController navController;
     private NavigationView navigationView;
-    private String bibleSelected = "bible_english";
+    private String bibleSelected;
 
     TextView textViewNavHeaderUserLoggedIn;
     TextView textViewNavHeaderUserEmail;
@@ -75,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
     Bitmap bitmap;
     Uri imageUri;
     MaterialToolbar toolbar;
+
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
 
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -106,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
         textViewNavHeaderUserLoggedIn = viewNavigationHeader.findViewById(R.id.textViewNavHeaderUserLoggedIn);
         textViewNavHeaderUserEmail = viewNavigationHeader.findViewById(R.id.textViewNavHeaderUserEmail);
         imageViewNavHeaderUserImage = viewNavigationHeader.findViewById(R.id.imageViewNavHeaderUserImage);
+
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor = prefs.edit();
+
+        bibleSelected = prefs.getString("bibleSelected", "bible_telugu");
 
 
         if (firebaseUser != null && firebaseUser.getPhotoUrl() != null) {
@@ -141,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -170,6 +175,8 @@ public class MainActivity extends AppCompatActivity {
                                 .setPopEnterAnim(R.anim.slide_in_left)
                                 .setPopExitAnim(R.anim.slide_out_right)
                                 .build());
+                        editor.putString("bibleSelected", bibleSelected);
+                        editor.apply();
                         return true;
                     case R.id.englishBible:
                         bibleSelected = "bible_english";
@@ -181,6 +188,8 @@ public class MainActivity extends AppCompatActivity {
                                 .setPopEnterAnim(R.anim.slide_in_left)
                                 .setPopExitAnim(R.anim.slide_out_right)
                                 .build());
+                        editor.putString("bibleSelected", bibleSelected);
+                        editor.apply();
                         return true;
                     case R.id.hindiBible:
                         bibleSelected = "bible_hindi";
@@ -192,6 +201,9 @@ public class MainActivity extends AppCompatActivity {
                                 .setPopEnterAnim(R.anim.slide_in_left)
                                 .setPopExitAnim(R.anim.slide_out_right)
                                 .build());
+
+                        editor.putString("bibleSelected", bibleSelected);
+                        editor.apply();
                         return true;
                     case R.id.malayalamBible:
                         bibleSelected = "bible_malayalam";
@@ -203,6 +215,8 @@ public class MainActivity extends AppCompatActivity {
                                 .setPopEnterAnim(R.anim.slide_in_left)
                                 .setPopExitAnim(R.anim.slide_out_right)
                                 .build());
+                        editor.putString("bibleSelected", bibleSelected);
+                        editor.apply();
                         return true;
                     case R.id.tamilBible:
                         bibleSelected = "bible_tamil";
@@ -214,6 +228,8 @@ public class MainActivity extends AppCompatActivity {
                                 .setPopEnterAnim(R.anim.slide_in_left)
                                 .setPopExitAnim(R.anim.slide_out_right)
                                 .build());
+                        editor.putString("bibleSelected", bibleSelected);
+                        editor.apply();
                         return true;
                     case R.id.kannadaBible:
                         bibleSelected = "bible_kannada";
@@ -225,6 +241,8 @@ public class MainActivity extends AppCompatActivity {
                                 .setPopEnterAnim(R.anim.slide_in_left)
                                 .setPopExitAnim(R.anim.slide_out_right)
                                 .build());
+                        editor.putString("bibleSelected", bibleSelected);
+                        editor.apply();
                         return true;
                     case R.id.dictFragment:
                         navController.navigate(R.id.dictFragment);
@@ -361,6 +379,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                editor.commit();
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -436,6 +466,7 @@ public class MainActivity extends AppCompatActivity {
                             .setPopEnterAnim(R.anim.slide_in_left)
                             .setPopExitAnim(R.anim.slide_out_right)
                             .build());
+
                 } else if (navController.getCurrentDestination().getId() == R.id.dictFragment) {
                     searchView.clearFocus();
                     Bundle bundle = new Bundle();

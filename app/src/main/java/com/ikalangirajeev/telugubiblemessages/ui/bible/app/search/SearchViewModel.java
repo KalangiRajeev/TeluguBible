@@ -54,7 +54,7 @@ public class SearchViewModel extends AndroidViewModel {
         searchDataList.clear();
         Log.d(TAG, "getSearchDataList: " + selectedBible);
         try {
-            searchDataList = new MyAsyncTask(getApplication()).execute(selectedBible, searchableString).get();
+            searchDataList = new MyAsyncTask(getApplication()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, selectedBible, searchableString).get();
         } catch (Exception e) {
             e.printStackTrace();
         }

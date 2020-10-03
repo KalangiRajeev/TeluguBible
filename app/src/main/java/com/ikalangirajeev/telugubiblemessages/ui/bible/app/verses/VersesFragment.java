@@ -183,9 +183,8 @@ public class VersesFragment extends Fragment {
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
                     int verseNumber = viewHolder.getAdapterPosition() + 1;
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, bookName + " " + (chapterNumber + 1) + ":" + verseNumber + "\n"
-                            + myRecyclerViewAdapter.getDataAt(viewHolder.getAdapterPosition()).getHeader());
-
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, bookName + " " + chapterNumber + ":" + verseNumber + "\n"
+                            + myRecyclerViewAdapter.getDataAt(viewHolder.getAdapterPosition()).getBody());
                     sendIntent.setType("text/plain");
                     Intent shareIntent = Intent.createChooser(sendIntent, null);
                     startActivity(shareIntent);
