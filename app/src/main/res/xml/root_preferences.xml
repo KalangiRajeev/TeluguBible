@@ -1,0 +1,17 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/selected_bible_header">
+
+        <ListPreference
+            app:key="bibleSelected"
+            app:summary="Select the bible of your preferred language"
+            app:defaultValue="Telugu Bible"
+            app:entries="@array/bible_entries"
+            app:entryValues="@array/bible_values"
+            app:title="@string/selected_bible"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

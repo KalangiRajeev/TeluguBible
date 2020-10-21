@@ -4,13 +4,18 @@ package com.ikalangirajeev.telugubiblemessages.ui.bible.app.verses;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.os.HandlerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ikalangirajeev.telugubiblemessages.R;
@@ -27,16 +32,18 @@ public class VersesRecyclerViewAdapter extends RecyclerView.Adapter<VersesRecycl
     private LayoutInflater layoutInflater;
     private OnItemClickListener onItemClickListener;
     private int layoutResource;
-    private int highLightPosition;
+    private int highLightPosition = RecyclerView.NO_POSITION;
 
-    public VersesRecyclerViewAdapter(Context context, int layoutResource, List<Data> dataList) {
+    public VersesRecyclerViewAdapter(Context context, int layoutResource) {
         this.context = context;
         this.layoutResource = layoutResource;
         layoutInflater = LayoutInflater.from(context);
-        this.dataList = dataList;
         setHasStableIds(true);
     }
 
+    public void setDataList(List<Data> dataList) {
+        this.dataList = dataList;
+    }
 
     @NonNull
     @Override
@@ -49,19 +56,21 @@ public class VersesRecyclerViewAdapter extends RecyclerView.Adapter<VersesRecycl
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
         Data data = dataList.get(position);
         holder.setData(data);
+        if (highLightPosition == position) {
+            holder.setAnimation(position);
+            highLightPosition = RecyclerView.NO_POSITION;
+        }
 //        holder.setListeners();
+    }
 
+    public void setHighLightPosition(int highLightPosition) {
+        this.highLightPosition = highLightPosition;
     }
 
     public Data getDataAt(int position) {
         return dataList.get(position);
-    }
-
-    public void setHighlightColor(int position) {
-        this.highLightPosition = position;
     }
 
     @Override
@@ -87,7 +96,6 @@ public class VersesRecyclerViewAdapter extends RecyclerView.Adapter<VersesRecycl
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             headerTextView = itemView.findViewById(R.id.textViewBooks);
             bodyTextView = itemView.findViewById(R.id.textViewChapters);
             linkedRefs = itemView.findViewById(R.id.linkedRefs);
@@ -97,6 +105,13 @@ public class VersesRecyclerViewAdapter extends RecyclerView.Adapter<VersesRecycl
             this.headerTextView.setText(data.getHeader());
             this.bodyTextView.setText(data.getBody());
             this.linkedRefs.setText(String.valueOf(data.getRefLink()));
+        }
+
+        public void setAnimation(int position) {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left);
+            animation.setDuration(1000);
+            animation.setInterpolator(new AnticipateOvershootInterpolator());
+            itemView.startAnimation(animation);
         }
 
 //        public void setListeners() {

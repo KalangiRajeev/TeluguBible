@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.rpc.Help;
 import com.ikalangirajeev.telugubiblemessages.R;
+import com.ikalangirajeev.telugubiblemessages.ui.bible.app.search.SearchData;
+import com.ikalangirajeev.telugubiblemessages.ui.bible.app.search.SearchRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +23,15 @@ public class BottomSheetRecyclerViewAdapter extends RecyclerView.Adapter<BottomS
     private int layoutResource;
     private LayoutInflater layoutInflater;
     private List<LinkVerse> linkVerseList;
-    public BottomSheetRecyclerViewAdapter(Context context, int layoutResource, List<LinkVerse> linkVerseList) {
+    private OnRVItemClickListener onRVItemClickListener;
+
+    public BottomSheetRecyclerViewAdapter(Context context, int layoutResource) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
         this.layoutResource = layoutResource;
+    }
+
+    public void setLinkVerseList(List<LinkVerse> linkVerseList) {
         this.linkVerseList = linkVerseList;
     }
 
@@ -40,6 +47,7 @@ public class BottomSheetRecyclerViewAdapter extends RecyclerView.Adapter<BottomS
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         LinkVerse linkVerse = linkVerseList.get(position);
         holder.setData(linkVerse);
+        holder.setListeners();
     }
 
     @Override
@@ -61,5 +69,25 @@ public class BottomSheetRecyclerViewAdapter extends RecyclerView.Adapter<BottomS
             headerTextView.setText(linkVerse.getHeader());
             bodyTextView.setText(linkVerse.getBody());
         }
+
+        public void setListeners() {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(onRVItemClickListener != null && position != RecyclerView.NO_POSITION);{
+                        onRVItemClickListener.OnRVItemClick(linkVerseList.get(position), position);
+                    }
+                }
+            });
+        }
+    }
+
+    public interface OnRVItemClickListener {
+        void OnRVItemClick(LinkVerse linkVerse, int position);
+    }
+
+    public void setOnRVItemClickListener(OnRVItemClickListener onRVItemClickListener) {
+        this.onRVItemClickListener = onRVItemClickListener;
     }
 }

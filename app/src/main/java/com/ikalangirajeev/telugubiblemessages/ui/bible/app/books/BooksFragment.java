@@ -1,15 +1,24 @@
 package com.ikalangirajeev.telugubiblemessages.ui.bible.app.books;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.preference.PreferenceManager;
+import android.transition.Explode;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.core.os.HandlerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,11 +26,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ikalangirajeev.telugubiblemessages.R;
+import com.ikalangirajeev.telugubiblemessages.ui.SettingsFragment;
 import com.ikalangirajeev.telugubiblemessages.ui.bible.app.Data;
 import com.ikalangirajeev.telugubiblemessages.ui.bible.app.MyRecyclerViewAdapter;
 
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BooksFragment extends Fragment {
 
@@ -33,12 +45,27 @@ public class BooksFragment extends Fragment {
     private RecyclerView recyclerView;
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
     private String bibleSelected;
+    private SharedPreferences prefs;
+    private boolean isTablet;
+    private View view;
+
+    ExecutorService executorService = Executors.newFixedThreadPool(4);
+    Handler handler = HandlerCompat.createAsync(Looper.getMainLooper());
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        bibleSelected = getArguments().getString("bible");
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+        isTablet = getActivity().getApplicationContext().getResources().getBoolean(R.bool.isTablet);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        bibleSelected = getArguments().getString("bibleSelected", prefs.getString(SettingsFragment.PREF_SELECTED_BIBLE, "bible_english"));
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Nullable
@@ -46,30 +73,33 @@ public class BooksFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         booksViewModel =
-                ViewModelProviders.of(this).get(BooksViewModel.class);
-        View view = inflater.inflate(R.layout.fragment_books, container, false);
+                new ViewModelProvider(this).get(BooksViewModel.class);
 
+        if (isTablet) {
+            view = inflater.inflate(R.layout.master_detail_nav_container, container, false);
+        } else {
+            view = inflater.inflate(R.layout.fragment_books, container, false);
+        }
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),2,
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2,
                 GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
+        myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(), R.layout.card_view_books);
+        recyclerView.setAdapter(myRecyclerViewAdapter);
+
 
         booksViewModel.getText(bibleSelected).observe(getViewLifecycleOwner(), new Observer<List<Data>>() {
             @Override
-            public void onChanged(List<Data> blogIndexList) {
-                myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(), R.layout.card_view_books, blogIndexList);
-                recyclerView.setAdapter(myRecyclerViewAdapter);
+            public void onChanged(final List<Data> data) {
 
-                myRecyclerViewAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+                myRecyclerViewAdapter.setDataList(data);
+
+                myRecyclerViewAdapter.setOnRyVwItemClickListener(new MyRecyclerViewAdapter.OnRyVwItemClickListener() {
                     @Override
-                    public void OnItemClick(Data data, int position) {
-//                        FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
-//                                .addSharedElement(recyclerView.getChildAt(position), "books_chapters")
-//                                .build();
-
+                    public void OnRyVwItemClick(Data data, int position) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("bible", bibleSelected);
+                        bundle.putString("bibleSelected", bibleSelected);
                         bundle.putString("BookName", data.getHeader());
                         bundle.putInt("BookNumber", position);
                         bundle.putInt("ChaptersCount", data.getRefLink());
@@ -77,7 +107,9 @@ public class BooksFragment extends Fragment {
                     }
                 });
             }
+
         });
+
         return view;
     }
 
@@ -85,6 +117,10 @@ public class BooksFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
+        if (isTablet) {
+            navController = Navigation.findNavController(getActivity(), R.id.navigation_master_detail);
+        } else {
+            navController = Navigation.findNavController(view);
+        }
     }
 }

@@ -53,42 +53,49 @@ public class BottomSheetViewModel extends AndroidViewModel {
             e.printStackTrace();
         }
 
-        if (bibleSelected.equals("bible_english")) {
-            try {
-                linkVerseList = new EnglishVersesAsyncTask(getApplication()).execute(verseInfoList).get();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (bibleSelected.equals("bible_tamil")){
-            try {
-                linkVerseList = new TamilVersesAsyncTask(getApplication()).execute(verseInfoList).get();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (bibleSelected.equals("bible_kannada")){
-            try {
-                linkVerseList = new KannadaVersesAsyncTask(getApplication()).execute(verseInfoList).get();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (bibleSelected.equals("bible_hindi")){
-            try {
-                linkVerseList = new HindiVersesAsyncTask(getApplication()).execute(verseInfoList).get();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (bibleSelected.equals("bible_malayalam")){
-            try {
-                linkVerseList = new MalayalamVersesAsyncTask(getApplication()).execute(verseInfoList).get();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                linkVerseList = new TeluguVersesAsyncTask(getApplication()).execute(verseInfoList).get();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        switch (bibleSelected) {
+            case "bible_english":
+                try {
+                    linkVerseList = new EnglishVersesAsyncTask(getApplication()).execute(verseInfoList).get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "bible_tamil":
+                try {
+                    linkVerseList = new TamilVersesAsyncTask(getApplication()).execute(verseInfoList).get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "bible_kannada":
+                try {
+                    linkVerseList = new KannadaVersesAsyncTask(getApplication()).execute(verseInfoList).get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "bible_hindi":
+                try {
+                    linkVerseList = new HindiVersesAsyncTask(getApplication()).execute(verseInfoList).get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "bible_malayalam":
+                try {
+                    linkVerseList = new MalayalamVersesAsyncTask(getApplication()).execute(verseInfoList).get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            default:
+                try {
+                    linkVerseList = new TeluguVersesAsyncTask(getApplication()).execute(verseInfoList).get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
         }
         linkedVersesList.setValue(linkVerseList);
         return linkedVersesList;

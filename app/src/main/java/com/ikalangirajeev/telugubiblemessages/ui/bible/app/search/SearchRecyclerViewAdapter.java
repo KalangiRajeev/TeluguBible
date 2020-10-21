@@ -29,7 +29,7 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
     private Context context;
     private List<SearchData> dataList = new ArrayList<>();
     private LayoutInflater layoutInflater;
-    private OnItemClickListener onItemClickListener;
+    private OnRVItemClickListener onRVItemClickListener;
     private int layoutResource;
     private String searchString;
 
@@ -106,19 +106,18 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if (onItemClickListener != null && position != RecyclerView.NO_POSITION) {
-                        onItemClickListener.OnItemClick(dataList.get(position), position);
-                        Log.d(TAG, String.valueOf(dataList.get(position).getHeader()));
+                    if (onRVItemClickListener != null && position != RecyclerView.NO_POSITION) {
+                        onRVItemClickListener.OnRVItemClick(dataList.get(position), position);
                     }
                 }
             });
         }
     }
-    public interface OnItemClickListener {
-        void OnItemClick(SearchData searchData, int position);
+    public interface OnRVItemClickListener {
+        void OnRVItemClick(SearchData searchData, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setOnRVItemClickListener(OnRVItemClickListener onRVItemClickListener) {
+        this.onRVItemClickListener = onRVItemClickListener;
     }
 }

@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,18 +25,21 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private Context context;
     private List<Data> dataList = new ArrayList<>();
     private LayoutInflater layoutInflater;
-    private OnItemClickListener onItemClickListener;
+    private OnRyVwItemClickListener onRyVwItemClickListener;
     private int layoutResource;
     private int highLightPosition;
 
-    public MyRecyclerViewAdapter(Context context, int layoutResource, List<Data> dataList) {
+    public MyRecyclerViewAdapter(Context context, int layoutResource) {
         this.context = context;
         this.layoutResource = layoutResource;
         layoutInflater = LayoutInflater.from(context);
-        this.dataList = dataList;
         setHasStableIds(true);
     }
 
+    public void setDataList(List<Data> dataList) {
+        this.dataList = dataList;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -83,12 +89,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             headerTextView = itemView.findViewById(R.id.textViewBooks);
             bodyTextView = itemView.findViewById(R.id.textViewChapters);
         }
 
         public void setData(Data data) {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_up);
+            animation.setDuration(1000);
+            animation.setInterpolator(new AnticipateOvershootInterpolator());
+            itemView.startAnimation(animation);
+
             this.headerTextView.setText(data.getHeader());
             this.bodyTextView.setText(data.getBody());
         }
@@ -98,20 +108,18 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if (onItemClickListener != null && position != RecyclerView.NO_POSITION) {
-                        onItemClickListener.OnItemClick(dataList.get(position), position);
-
-                        Log.d(TAG, String.valueOf(dataList.get(position).getHeader()));
+                    if (onRyVwItemClickListener != null && position != RecyclerView.NO_POSITION) {
+                        onRyVwItemClickListener.OnRyVwItemClick(dataList.get(position), position);
                     }
                 }
             });
         }
     }
-    public interface OnItemClickListener {
-        void OnItemClick(Data blogIndex, int position);
+    public interface OnRyVwItemClickListener {
+        void OnRyVwItemClick(Data blogIndex, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setOnRyVwItemClickListener(OnRyVwItemClickListener onRyVwItemClickListener) {
+        this.onRyVwItemClickListener = onRyVwItemClickListener;
     }
 }

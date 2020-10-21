@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.ikalangirajeev.telugubiblemessages"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 7
-        versionName "1.6"
+        targetSdkVersion 30
+        versionCode 9
+        versionName "1.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -17,24 +17,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.material:material:1.2.0' //
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    implementation 'androidx.navigation:navigation-fragment:2.3.0'
-    implementation 'androidx.navigation:navigation-ui:2.3.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.navigation:navigation-fragment:2.3.1'
+    implementation 'androidx.navigation:navigation-ui:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     //GSON
     implementation 'com.google.code.gson:gson:2.8.6'
     //Firebase Database
-    implementation 'com.google.firebase:firebase-database:19.4.0'
+    implementation 'com.google.firebase:firebase-database:19.5.0'
     //Firebase Auth
-    implementation 'com.google.firebase:firebase-auth:19.3.2'
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
     //Firebase Storage
     implementation 'com.google.firebase:firebase-storage:19.2.0'
 
@@ -43,12 +47,17 @@ dependencies {
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    androidTestImplementation 'junit:junit:4.12'
-    androidTestImplementation 'junit:junit:4.12'
+
+    // Preference Support Library
+    implementation 'androidx.preference:preference:1.1.1'
+
+    
+    androidTestImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'junit:junit:4.13.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     //Banner Ad
-    implementation 'com.google.android.gms:play-services-ads:19.3.0'
+    implementation 'com.google.android.gms:play-services-ads:19.4.0'
 
     //Firebase UI
     implementation 'com.firebaseui:firebase-ui-database:6.2.1'
@@ -67,15 +76,15 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.2.5"
 
     // (Required) Writing and executing Unit Tests on the JUnit Platform
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 
     // (Optional) If you need "Parameterized Tests"
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.6.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
 
     // (Optional) If you also have JUnit 4-based tests
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'junit:junit:4.13.1'
 
     // Core library
     androidTestImplementation 'androidx.test:core:1.3.0'
@@ -90,7 +99,11 @@ dependencies {
     // Assertions
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.ext:truth:1.3.0'
-    androidTestImplementation 'com.google.truth:truth:1.0'
+    androidTestImplementation 'com.google.truth:truth:1.0.1'
+
+    // RxJava & RxAndroid
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.7'
 
 }
 configurations {

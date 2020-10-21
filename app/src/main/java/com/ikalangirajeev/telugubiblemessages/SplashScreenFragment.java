@@ -71,6 +71,7 @@ public class SplashScreenFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +79,12 @@ public class SplashScreenFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        ((MainActivity)getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE
+        );
     }
 
     @Override
@@ -89,9 +95,13 @@ public class SplashScreenFragment extends Fragment {
 
         imageView = root.findViewById(R.id.splashScreenImage);
 
-        animatorSet = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.splash_screen_animator);
-        animatorSet.setTarget(imageView);
-        animatorSet.start();
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+            animatorSet = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.splash_screen_animator);
+            animatorSet.setTarget(imageView);
+            animatorSet.start();
+        } else {
+            imageView.animate().scaleX(1.5f).scaleY(1.5f).rotationBy(-30).setDuration(3000).start();
+        }
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -99,12 +109,12 @@ public class SplashScreenFragment extends Fragment {
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 if (firebaseUser == null) {
                     navController.navigate(R.id.loginFragment, null, new NavOptions.Builder()
-                    .setPopUpTo(R.id.splashScreenFragment, true)
+                            .setPopUpTo(R.id.splashScreenFragment, true)
                             .setEnterAnim(R.anim.slide_in_right)
                             .setExitAnim(R.anim.slide_out_left)
                             .setPopEnterAnim(R.anim.slide_in_left)
                             .setPopExitAnim(R.anim.slide_out_right)
-                    .build());
+                            .build());
                 } else if (!firebaseUser.isEmailVerified()) {
 
                     firebaseUser.getDisplayName();

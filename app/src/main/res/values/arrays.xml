@@ -1,0 +1,20 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="bible_entries">
+        <item>English Bible</item>
+        <item>Telugu Bible</item>
+        <item>Hindi Bible</item>
+        <item>Kannada Bible</item>
+        <item>Tamil Bible</item>
+        <item>Malayalam Bible</item>
+    </string-array>
+
+    <string-array name="bible_values">
+        <item>bible_english</item>
+        <item>bible_telugu</item>
+        <item>bible_hindi</item>
+        <item>bible_kannada</item>
+        <item>bible_tamil</item>
+        <item>bible_malayalam</item>
+    </string-array>
+</resources>

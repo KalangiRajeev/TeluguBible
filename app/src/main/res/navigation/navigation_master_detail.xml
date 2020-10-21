@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_master_detail"
+    app:startDestination="@id/chaptersFragment2">
+
+    <fragment
+        android:id="@+id/chaptersFragment2"
+        android:name="com.ikalangirajeev.telugubiblemessages.ui.bible.app.chapters.ChaptersFragment"
+        android:label="{BookName}"
+        tools:layout="@layout/fragment_chapters">
+        <action
+            android:id="@+id/action_chaptersFragment2_to_versesFragment2"
+            app:destination="@id/versesFragment2"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <argument
+            android:name="bibleSelected"
+            app:argType="string"/>
+        <argument
+            android:name="BookName"
+            android:defaultValue="0"
+            app:argType="string" />
+        <argument
+            android:name="BookNumber"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="ChapterNumber"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="chaptersCount"
+            android:defaultValue="0"
+            app:argType="integer"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/versesFragment2"
+        android:name="com.ikalangirajeev.telugubiblemessages.ui.bible.app.verses.VersesFragment"
+        android:label="{BookName}"
+        tools:layout="@layout/fragment_verses">
+
+        <argument
+            android:name="bibleSelected"
+            app:argType="string"/>
+        <argument
+            android:name="BookName"
+            android:defaultValue="None"
+            app:argType="string" />
+        <argument
+            android:name="BookNumber"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="ChapterNumber"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="VerseNumber"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="com.ikalangirajeev.telugubiblemessages.ui.bible.app.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment2_to_versesFragment2"
+            app:destination="@id/versesFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="bibleSelected"
+            android:defaultValue="bible_english"
+            app:argType="string"/>
+        <argument
+            android:name="BookName"
+            android:defaultValue="Search Results..."
+            app:argType="string" />
+        <argument
+            android:name="BookNumber"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="ChapterNumber"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="HighlightVerseNumber"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>
